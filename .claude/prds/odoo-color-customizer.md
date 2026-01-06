@@ -3,7 +3,7 @@ name: odoo-color-customizer
 description: Odoo 18 module enabling system administrators to replace the default purple primary color with a custom color across the entire UI
 status: backlog
 created: 2026-01-06T16:12:26Z
-updated: 2026-01-06T16:28:09Z
+updated: 2026-01-06T16:30:13Z
 ---
 
 # PRD: Odoo Color Customizer Module
@@ -378,6 +378,251 @@ The following are explicitly **NOT** included in this version:
 | Color contrast accessibility issues | Medium | High | Add contrast ratio warning in color picker |
 | Performance impact on page load | Medium | Low | Lazy load CSS; cache generated styles |
 | Conflicts with custom themes | Medium | Medium | Test with common themes; document limitations |
+
+## Bug Resolution Process
+
+### ⚠️ MANDATORY PROCESS
+
+**All bugs MUST follow this 5-step process to ensure 100% resolution. No exceptions.**
+
+### Reference Architecture
+```
+📁 /mnt/c/Users/Matt/Desktop/CLAUDE專案/ODOO相關/Odoo_18_Environment_Architecture
+```
+Always consult this reference for Odoo 18 environment architecture details when debugging.
+
+### Step 1: Deep Research 🔍
+
+**Objective:** Understand the root cause completely before attempting any fix.
+
+| Task | Description | Output |
+|------|-------------|--------|
+| 1.1 Reproduce | Consistently reproduce the bug | Steps to reproduce documented |
+| 1.2 Analyze logs | Check Odoo server logs, browser console | Relevant error messages captured |
+| 1.3 Trace code flow | Follow execution path through codebase | Identify exact failure point |
+| 1.4 Check architecture | Reference Odoo 18 Environment Architecture | Understand system context |
+| 1.5 Root cause | Identify WHY the bug occurs | Root cause statement |
+
+**Research Checklist:**
+```markdown
+- [ ] Bug consistently reproduced
+- [ ] Error messages captured (server + browser)
+- [ ] Code execution path traced
+- [ ] Odoo architecture reference consulted
+- [ ] Root cause identified and documented
+- [ ] Related components identified
+```
+
+**Research Output Template:**
+```markdown
+## Bug Research: [Bug Title]
+
+### Reproduction Steps
+1. ...
+2. ...
+
+### Error Evidence
+- Server log: `[paste relevant log]`
+- Browser console: `[paste relevant errors]`
+
+### Code Flow Analysis
+- Entry point: `[file:line]`
+- Failure point: `[file:line]`
+- Related files: [list]
+
+### Root Cause
+[Clear statement of why the bug occurs]
+
+### Architecture Reference
+Consulted: `/mnt/c/Users/Matt/Desktop/CLAUDE專案/ODOO相關/Odoo_18_Environment_Architecture`
+Relevant sections: [list]
+```
+
+### Step 2: Create Fix Plan 📋
+
+**Objective:** Design a complete solution before writing any code.
+
+| Task | Description | Output |
+|------|-------------|--------|
+| 2.1 Solution design | Outline the fix approach | Technical solution document |
+| 2.2 Impact analysis | Identify what else might be affected | Impact assessment |
+| 2.3 Test cases | Define how to verify the fix | Test case list |
+| 2.4 Rollback plan | How to revert if fix fails | Rollback procedure |
+
+**Fix Plan Template:**
+```markdown
+## Fix Plan: [Bug Title]
+
+### Proposed Solution
+[Describe the fix approach]
+
+### Files to Modify
+| File | Change Description |
+|------|-------------------|
+| `path/to/file.py` | [what changes] |
+
+### Impact Assessment
+- Direct impact: [components directly affected]
+- Side effects: [potential side effects]
+- Risk level: [Low/Medium/High]
+
+### Test Cases
+1. [ ] [Test case 1]
+2. [ ] [Test case 2]
+3. [ ] [Regression test]
+
+### Rollback Plan
+[Steps to revert changes if needed]
+```
+
+### Step 3: Review Fix Plan 👀
+
+**Objective:** Validate the plan before implementation.
+
+| Task | Description | Criteria |
+|------|-------------|----------|
+| 3.1 Self-review | Review own plan critically | Logical and complete |
+| 3.2 Architecture check | Verify against Odoo patterns | Follows Odoo conventions |
+| 3.3 Edge cases | Consider boundary conditions | All edge cases handled |
+| 3.4 Approval gate | Confirm plan is ready | Ready to implement |
+
+**Review Checklist:**
+```markdown
+- [ ] Solution addresses root cause (not just symptoms)
+- [ ] Changes follow Odoo 18 conventions
+- [ ] No unnecessary changes included
+- [ ] Test cases cover all scenarios
+- [ ] Rollback plan is viable
+- [ ] Impact is acceptable
+```
+
+### Step 4: Implement Fix Plan 🛠️
+
+**Objective:** Execute the plan exactly as designed.
+
+| Task | Description | Output |
+|------|-------------|--------|
+| 4.1 Create branch | Bug fix branch | `bugfix/[bug-name]` |
+| 4.2 Implement | Code the fix | Modified files |
+| 4.3 Unit test | Run local tests | Test results |
+| 4.4 Commit | Commit with proper message | Git commit |
+
+**Implementation Rules:**
+1. **Follow the plan** - Do not deviate without re-planning
+2. **Atomic commits** - One logical change per commit
+3. **Comment changes** - Explain non-obvious fixes
+4. **No scope creep** - Only fix the bug, nothing else
+
+**Commit Message Format:**
+```
+[bugfix] Brief description of fix
+
+Root cause: [what caused the bug]
+Fix: [what the fix does]
+
+Resolves: [bug reference if any]
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
+```
+
+### Step 5: Deploy & Test 🚀
+
+**Objective:** Verify the fix works in a live Odoo 18 environment.
+
+| Task | Description | Output |
+|------|-------------|--------|
+| 5.1 Deploy | Deploy to test environment | Module updated |
+| 5.2 Verify fix | Run through reproduction steps | Bug no longer occurs |
+| 5.3 Regression test | Test related functionality | No new issues |
+| 5.4 Playwright test | Run automated tests (headed mode) | Screenshots captured |
+| 5.5 Sign-off | Confirm bug is resolved | Closure confirmation |
+
+**Test Verification Checklist:**
+```markdown
+- [ ] Bug reproduction steps now pass
+- [ ] All test cases from fix plan pass
+- [ ] No regression in related functionality
+- [ ] Playwright tests pass with screenshots
+- [ ] No new console errors
+- [ ] Performance not degraded
+```
+
+**Closure Documentation:**
+```markdown
+## Bug Resolution: [Bug Title]
+
+### Status: ✅ RESOLVED
+
+### Fix Summary
+[Brief description of what was fixed]
+
+### Verification
+- Tested on: [Odoo version, browser]
+- Test date: [datetime]
+- Test evidence: [screenshot paths]
+
+### Commits
+- `[commit hash]` - [message]
+
+### Lessons Learned
+[Optional: what to do differently next time]
+```
+
+### Process Flowchart
+
+```
+┌─────────────────┐
+│   BUG FOUND     │
+└────────┬────────┘
+         ▼
+┌─────────────────┐
+│ 1. DEEP RESEARCH│◀─── Reference: Odoo_18_Environment_Architecture
+│    - Reproduce  │
+│    - Analyze    │
+│    - Root cause │
+└────────┬────────┘
+         ▼
+┌─────────────────┐
+│ 2. FIX PLAN     │
+│    - Design     │
+│    - Impact     │
+│    - Test cases │
+└────────┬────────┘
+         ▼
+┌─────────────────┐     ┌─────────────────┐
+│ 3. REVIEW PLAN  │────▶│  Plan rejected? │
+│    - Validate   │     │  Go back to #2  │
+│    - Approve    │     └─────────────────┘
+└────────┬────────┘
+         ▼
+┌─────────────────┐
+│ 4. IMPLEMENT    │
+│    - Code fix   │
+│    - Test local │
+│    - Commit     │
+└────────┬────────┘
+         ▼
+┌─────────────────┐     ┌─────────────────┐
+│ 5. DEPLOY TEST  │────▶│  Test failed?   │
+│    - Deploy     │     │  Go back to #1  │
+│    - Verify     │     └─────────────────┘
+│    - Sign-off   │
+└────────┬────────┘
+         ▼
+┌─────────────────┐
+│  ✅ BUG CLOSED  │
+└─────────────────┘
+```
+
+### Critical Rules
+
+1. **NO SKIPPING STEPS** - Each step must be completed in order
+2. **DOCUMENT EVERYTHING** - Create artifacts for each step
+3. **VERIFY ROOT CAUSE** - Never fix symptoms only
+4. **TEST THOROUGHLY** - Use Playwright headed mode with screenshots
+5. **REFERENCE ARCHITECTURE** - Always consult Odoo_18_Environment_Architecture
 
 ## Development Workflow
 
