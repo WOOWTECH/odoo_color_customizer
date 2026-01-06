@@ -3,7 +3,7 @@ name: odoo-color-customizer
 description: Odoo 18 module enabling system administrators to replace the default purple primary color with a custom color across the entire UI
 status: backlog
 created: 2026-01-06T16:12:26Z
-updated: 2026-01-06T16:30:13Z
+updated: 2026-01-06T16:32:30Z
 ---
 
 # PRD: Odoo Color Customizer Module
@@ -725,6 +725,168 @@ git push origin main
 git branch -d feature/odoo-color-customizer
 git push origin --delete feature/odoo-color-customizer
 ```
+
+## Parallel Agent Execution
+
+### Overview
+
+Use **parallel agents** to maximize efficiency when working on independent tasks. Multiple agents can work simultaneously on tasks that don't have dependencies.
+
+### When to Use Parallel Agents
+
+| Scenario | Parallel? | Reason |
+|----------|-----------|--------|
+| Model + Views (independent) | ✅ Yes | Different file types, no dependency |
+| JS component + CSS styles | ✅ Yes | Can be developed independently |
+| Unit tests for different modules | ✅ Yes | Tests are isolated |
+| Model + Controller (dependent) | ❌ No | Controller depends on model |
+| View + View inheritance | ❌ No | Inheritance requires base view |
+
+### Parallel Task Identification
+
+**Independent Tasks (Can Run in Parallel):**
+```
+┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+│  Agent A        │  │  Agent B        │  │  Agent C        │
+│  Python Models  │  │  OWL Components │  │  CSS Styles     │
+│  ────────────── │  │  ────────────── │  │  ────────────── │
+│  res_config.py  │  │  color_picker.js│  │  theme.scss     │
+│  ir_config.py   │  │  preview.js     │  │  variables.scss │
+└─────────────────┘  └─────────────────┘  └─────────────────┘
+        │                    │                    │
+        └────────────────────┼────────────────────┘
+                             ▼
+                    ┌─────────────────┐
+                    │  Integration    │
+                    │  (Sequential)   │
+                    └─────────────────┘
+```
+
+### Module Development Parallelization
+
+For `odoo_color_customizer`, these task groups can run in parallel:
+
+#### Stream A: Backend (Python)
+```
+- models/res_config_settings.py
+- models/ir_config_parameter.py (if needed)
+- controllers/main.py
+- __manifest__.py
+```
+
+#### Stream B: Frontend (JavaScript/OWL)
+```
+- static/src/js/color_picker.js
+- static/src/js/color_preview.js
+- static/src/xml/color_picker.xml
+```
+
+#### Stream C: Styling (CSS/SCSS)
+```
+- static/src/scss/color_customizer.scss
+- static/src/scss/variables.scss
+```
+
+#### Stream D: Configuration (XML)
+```
+- views/res_config_settings_views.xml
+- data/ir_config_parameter_data.xml
+- security/ir.model.access.csv
+```
+
+### Agent Invocation Pattern
+
+**Launch parallel agents in a single message:**
+```python
+# CORRECT: Multiple Task tool calls in one message
+Task(agent="backend-specialist", task="Implement Python models for color settings")
+Task(agent="frontend-specialist", task="Create OWL color picker component")
+Task(agent="style-specialist", task="Implement CSS variable overrides")
+```
+
+**NOT this (sequential):**
+```python
+# INCORRECT: One at a time
+Task(agent="backend-specialist", task="...")
+# Wait for result
+Task(agent="frontend-specialist", task="...")
+# Wait for result
+```
+
+### Dependency Matrix
+
+| Task | Depends On | Can Parallel With |
+|------|------------|-------------------|
+| Python Models | None | JS, CSS, XML Config |
+| OWL Components | None | Python, CSS, XML Config |
+| CSS Styles | None | Python, JS, XML Config |
+| XML Views | Python Models | JS, CSS |
+| Controller | Python Models | JS, CSS |
+| Integration Tests | All above | None |
+
+### Coordination Rules
+
+1. **File Ownership**: Each agent works on distinct files
+2. **No Overlap**: Agents never modify the same file simultaneously
+3. **Sync Points**: Define clear integration points
+4. **Communication**: Use progress files for status updates
+
+### Progress Tracking for Parallel Work
+
+Each parallel stream maintains its own progress:
+```
+.claude/epics/{epic}/updates/
+├── stream-A-backend.md
+├── stream-B-frontend.md
+├── stream-C-styling.md
+└── stream-D-config.md
+```
+
+### Sync Point Protocol
+
+After parallel work completes:
+```bash
+# 1. All agents commit their changes
+git add {stream-specific-files}
+git commit -m "[stream-X] Complete {component}"
+
+# 2. Integration agent pulls all changes
+git pull origin feature/odoo-color-customizer
+
+# 3. Integration testing begins (sequential)
+# Run tests to verify all streams work together
+```
+
+### Example: Parallel Development Sprint
+
+```
+Time  │ Agent A (Backend)    │ Agent B (Frontend)   │ Agent C (Styling)
+──────┼──────────────────────┼──────────────────────┼─────────────────────
+T+0   │ Create model files   │ Create JS structure  │ Create SCSS files
+T+5   │ Implement settings   │ Build color picker   │ Define CSS variables
+T+10  │ Add controller       │ Add live preview     │ Override Odoo styles
+T+15  │ ✅ Commit            │ ✅ Commit            │ ✅ Commit
+──────┼──────────────────────┴──────────────────────┴─────────────────────
+T+16  │                    INTEGRATION PHASE
+      │              - Merge all streams
+      │              - Integration testing
+      │              - Fix any interface issues
+```
+
+### Best Practices
+
+1. **Define boundaries clearly** before launching parallel agents
+2. **Use shared interfaces** (types, constants) defined upfront
+3. **Communicate via files** not assumptions
+4. **Test independently** before integration
+5. **Have a clear merge order** when dependencies exist
+
+### Anti-Patterns to Avoid
+
+❌ **Don't**: Launch parallel agents for dependent tasks
+❌ **Don't**: Have agents modify the same file
+❌ **Don't**: Skip integration testing after parallel work
+❌ **Don't**: Assume one agent's output without verification
 
 ## Future Considerations (v2.0+)
 
