@@ -1,0 +1,243 @@
+/**
+ * Color Customizer - CSS Variable Overrides
+ *
+ * This file overrides Odoo's default purple (#714B67) with custom colors
+ * set via CSS custom properties. The properties are loaded from the
+ * /color_customizer/theme.css endpoint.
+ */
+
+:root {
+  // Fallback values if custom properties not loaded
+  --custom-primary: var(--o-brand-odoo, #714B67);
+  --custom-primary-hover: #5a3c52;
+  --custom-primary-active: #4a3244;
+  --custom-primary-light: #f0e8ed;
+  --custom-primary-text: #ffffff;
+}
+
+// =============================================================================
+// Navbar
+// =============================================================================
+.o_main_navbar {
+  background-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// Buttons
+// =============================================================================
+
+// Primary buttons
+.btn-primary {
+  background-color: var(--custom-primary) !important;
+  border-color: var(--custom-primary) !important;
+  color: var(--custom-primary-text) !important;
+
+  &:hover,
+  &:focus {
+    background-color: var(--custom-primary-hover) !important;
+    border-color: var(--custom-primary-hover) !important;
+  }
+
+  &:active,
+  &.active {
+    background-color: var(--custom-primary-active) !important;
+    border-color: var(--custom-primary-active) !important;
+  }
+
+  &:disabled,
+  &.disabled {
+    background-color: var(--custom-primary) !important;
+    border-color: var(--custom-primary) !important;
+    opacity: 0.65;
+  }
+}
+
+// Outline primary buttons
+.btn-outline-primary {
+  color: var(--custom-primary) !important;
+  border-color: var(--custom-primary) !important;
+
+  &:hover,
+  &:focus {
+    background-color: var(--custom-primary) !important;
+    color: var(--custom-primary-text) !important;
+  }
+}
+
+// Link buttons
+.btn-link {
+  color: var(--custom-primary) !important;
+
+  &:hover {
+    color: var(--custom-primary-hover) !important;
+  }
+}
+
+// =============================================================================
+// Links
+// =============================================================================
+a:not(.btn):not(.nav-link):not(.dropdown-item) {
+  color: var(--custom-primary);
+
+  &:hover {
+    color: var(--custom-primary-hover);
+  }
+}
+
+// =============================================================================
+// Form Elements
+// =============================================================================
+
+// Focus states
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--custom-primary) !important;
+  box-shadow: 0 0 0 0.2rem var(--custom-primary-light) !important;
+}
+
+// Checkboxes and radios
+.form-check-input:checked {
+  background-color: var(--custom-primary) !important;
+  border-color: var(--custom-primary) !important;
+}
+
+.form-check-input:focus {
+  border-color: var(--custom-primary) !important;
+  box-shadow: 0 0 0 0.2rem var(--custom-primary-light) !important;
+}
+
+// =============================================================================
+// Selection & Highlights
+// =============================================================================
+
+// List view selection
+.o_list_view .o_data_row.o_selected_row {
+  background-color: var(--custom-primary-light) !important;
+}
+
+.o_list_view .o_data_row:hover {
+  background-color: var(--custom-primary-light) !important;
+}
+
+// =============================================================================
+// Kanban
+// =============================================================================
+.o_kanban_record {
+  &:hover {
+    border-left-color: var(--custom-primary) !important;
+  }
+}
+
+.o_kanban_group_header {
+  .o_column_title {
+    color: var(--custom-primary);
+  }
+}
+
+// =============================================================================
+// Progress Bars
+// =============================================================================
+.progress-bar {
+  background-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// Badges
+// =============================================================================
+.badge.bg-primary,
+.badge-primary {
+  background-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// Calendar
+// =============================================================================
+.fc-event,
+.fc-event-dot {
+  background-color: var(--custom-primary) !important;
+  border-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// Dropdowns
+// =============================================================================
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// Pagination
+// =============================================================================
+.page-item.active .page-link {
+  background-color: var(--custom-primary) !important;
+  border-color: var(--custom-primary) !important;
+}
+
+.page-link {
+  color: var(--custom-primary);
+
+  &:hover {
+    color: var(--custom-primary-hover);
+  }
+}
+
+// =============================================================================
+// Tabs & Pills
+// =============================================================================
+.nav-tabs .nav-link.active {
+  color: var(--custom-primary) !important;
+  border-bottom-color: var(--custom-primary) !important;
+}
+
+.nav-pills .nav-link.active {
+  background-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// Text Utilities
+// =============================================================================
+.text-primary {
+  color: var(--custom-primary) !important;
+}
+
+.bg-primary {
+  background-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// Odoo Specific Components
+// =============================================================================
+
+// Status bar
+.o_statusbar_status {
+  button.btn-primary {
+    background-color: var(--custom-primary) !important;
+    border-color: var(--custom-primary) !important;
+  }
+
+  .o_arrow_button.btn-primary.disabled {
+    background-color: var(--custom-primary) !important;
+    border-color: var(--custom-primary) !important;
+  }
+}
+
+// Search view facets
+.o_searchview_facet {
+  background-color: var(--custom-primary-light) !important;
+  border-color: var(--custom-primary) !important;
+
+  .o_facet_value {
+    color: var(--custom-primary) !important;
+  }
+}
+
+// Control panel
+.o_control_panel .o_cp_switch_buttons .btn.active {
+  color: var(--custom-primary) !important;
+}
+
+// Chatter
+.o_ChatterTopbar {
+  border-bottom-color: var(--custom-primary) !important;
+}
