@@ -2,6 +2,7 @@
 name: odoo-color-customizer
 status: backlog
 created: 2026-01-06T16:34:33Z
+updated: 2026-01-06T16:38:47Z
 progress: 0%
 prd: .claude/prds/odoo-color-customizer.md
 github: [Will be updated when synced to GitHub]
@@ -198,9 +199,121 @@ odoo_color_customizer/
 └── README.md
 ```
 
+## Deployment Environment
+
+### Target Infrastructure
+| Component | Details |
+|-----------|---------|
+| Host | Home Assistant (192.168.2.254) |
+| Container | `addon_local_odoo` |
+| Odoo Version | 18.0 |
+| Config Path | `/addon_config/odoo/conf/odoo.conf` |
+| Database | `odoo` |
+| HTTP Port | 18070 |
+
+### Access Commands
+
+#### 1. SSH to Home Assistant
+```bash
+ssh ha-192-168-2-254
+```
+
+#### 2. Access Odoo Container (Interactive Shell)
+```bash
+docker exec -it addon_local_odoo /bin/bash
+```
+
+#### 3. Access Odoo Shell (Python REPL)
+```bash
+docker exec -it addon_local_odoo bash -lc \
+  "odoo shell -c /addon_config/odoo/conf/odoo.conf -d odoo --http-port=18070"
+```
+
+### Deployment Steps
+
+#### Step 1: Copy Module to Addons Path
+```bash
+# From local machine, copy module to Home Assistant
+scp -r odoo_color_customizer ha-192-168-2-254:/tmp/
+
+# SSH into Home Assistant
+ssh ha-192-168-2-254
+
+# Copy module into Docker container's addons path
+docker cp /tmp/odoo_color_customizer addon_local_odoo:/opt/odoo/addons/
+```
+
+#### Step 2: Update Addons List
+```bash
+# Access Odoo shell
+docker exec -it addon_local_odoo bash -lc \
+  "odoo shell -c /addon_config/odoo/conf/odoo.conf -d odoo --http-port=18070"
+
+# In Odoo shell, update apps list
+>>> env['ir.module.module'].update_list()
+>>> env.cr.commit()
+>>> exit()
+```
+
+#### Step 3: Install Module
+```bash
+# Option A: Via Odoo shell
+docker exec -it addon_local_odoo bash -lc \
+  "odoo -c /addon_config/odoo/conf/odoo.conf -d odoo -i odoo_color_customizer --stop-after-init"
+
+# Option B: Via Web UI
+# Navigate to Apps > Update Apps List > Search "odoo_color_customizer" > Install
+```
+
+#### Step 4: Restart Odoo (if needed)
+```bash
+# Restart the Odoo container
+docker restart addon_local_odoo
+```
+
+### Verification
+```bash
+# Check module is installed
+docker exec -it addon_local_odoo bash -lc \
+  "odoo shell -c /addon_config/odoo/conf/odoo.conf -d odoo --http-port=18070" << 'EOF'
+module = env['ir.module.module'].search([('name', '=', 'odoo_color_customizer')])
+print(f"Module state: {module.state}")
+exit()
+EOF
+```
+
+### Quick Deploy Script
+```bash
+#!/bin/bash
+# deploy.sh - Deploy odoo_color_customizer to Home Assistant Odoo
+
+set -e
+
+MODULE_NAME="odoo_color_customizer"
+HA_HOST="ha-192-168-2-254"
+CONTAINER="addon_local_odoo"
+ADDONS_PATH="/opt/odoo/addons"
+
+echo "📦 Copying module to Home Assistant..."
+scp -r ${MODULE_NAME} ${HA_HOST}:/tmp/
+
+echo "🐳 Copying module into Docker container..."
+ssh ${HA_HOST} "docker cp /tmp/${MODULE_NAME} ${CONTAINER}:${ADDONS_PATH}/"
+
+echo "🔄 Updating addons list..."
+ssh ${HA_HOST} "docker exec ${CONTAINER} bash -lc 'odoo -c /addon_config/odoo/conf/odoo.conf -d odoo -u ${MODULE_NAME} --stop-after-init'"
+
+echo "✅ Deployment complete! Access Odoo at http://192.168.2.254:18070"
+```
+
+### Odoo Web Access
+- **URL**: `http://192.168.2.254:18070`
+- **Settings**: Settings > General Settings > Color Customization
+
 ## Notes
 
 - **Leverage existing Odoo color widget** - Don't build custom color picker
 - **Use CSS custom properties** - No SCSS compilation needed at runtime
 - **Keep it simple** - 8 tasks max, focus on core functionality
 - **Test with Playwright MCP** - Headed mode with screenshots per PRD
+- **Deploy via Docker** - Use provided commands to deploy to Home Assistant Odoo
