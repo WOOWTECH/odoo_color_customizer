@@ -2,7 +2,7 @@
 name: odoo-color-customizer
 status: backlog
 created: 2026-01-06T16:34:33Z
-updated: 2026-01-06T16:38:47Z
+updated: 2026-01-06T16:41:29Z
 progress: 0%
 prd: .claude/prds/odoo-color-customizer.md
 github: [Will be updated when synced to GitHub]
@@ -307,8 +307,14 @@ echo "✅ Deployment complete! Access Odoo at http://192.168.2.254:18070"
 ```
 
 ### Odoo Web Access
-- **URL**: `http://192.168.2.254:18070`
-- **Settings**: Settings > General Settings > Color Customization
+
+| Field | Value |
+|-------|-------|
+| **URL** | https://matt-test-254-odoo.woowtech.io/ |
+| **Username** | `admin` |
+| **Password** | `admin` |
+| **Local URL** | http://192.168.2.254:18070 |
+| **Settings Path** | Settings > General Settings > Color Customization |
 
 ## Notes
 
