@@ -20,6 +20,19 @@
 // =============================================================================
 .o_main_navbar {
   background-color: var(--custom-primary) !important;
+
+  // Bug Fix #1: Navbar menu items background
+  .o_menu_sections .o_nav_entry {
+    background: var(--custom-primary) !important;
+
+    &:hover, &:focus {
+      background: var(--custom-primary-hover) !important;
+    }
+
+    &.active, &[aria-expanded="true"] {
+      background: var(--custom-primary-active) !important;
+    }
+  }
 }
 
 // =============================================================================
@@ -243,11 +256,12 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 }
 
 // =============================================================================
-// Settings Sidebar (Screenshot 1 & 2 fix)
+// Settings Sidebar (Bug Fix #2)
 // =============================================================================
 .o_base_settings_view .settings_tab {
   // Selected tab left border and background
   .selected {
+    background-color: var(--custom-primary-light) !important;
     box-shadow: inset 3px 0 0 var(--custom-primary) !important;
   }
 
@@ -260,7 +274,21 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 }
 
 // =============================================================================
-// Tags / Badges (Screenshot 1 - Pending Invitations)
+// Pending Invitations Border (Bug Fix #3)
+// =============================================================================
+.o_base_settings_view .o_settings_container {
+  .o_setting_box {
+    border-color: var(--custom-primary-light) !important;
+  }
+}
+
+// Pending invitations badges border
+.badge.rounded-pill.text-primary {
+  border-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// Tags / Badges (Bug Fix #3 continued - Pending Invitations)
 // =============================================================================
 // Default tags use color_0 which is the primary/purple color
 .o_tag.o_tag_color_0 {
@@ -282,22 +310,33 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 }
 
 // =============================================================================
-// Enterprise Badge (Screenshot 2 fix)
+// Enterprise Badge (Bug Fix #4)
 // =============================================================================
 .o_enterprise_label .badge,
+.o_enterprise_label,
 .badge.text-bg-odoo,
-.badge.bg-odoo {
+.badge.bg-odoo,
+.badge.text-bg-info,
+// Key fix: Enterprise badge uses text-bg-primary class
+.badge.text-bg-primary.o_enterprise_label,
+span.badge.text-bg-primary.o_enterprise_label,
+span.badge.o_enterprise_label,
+span.badge:not(.bg-success):not(.bg-danger):not(.bg-warning):not(.bg-secondary):not(.bg-info):not(.bg-light):not(.bg-dark) {
   background-color: var(--custom-primary) !important;
   color: var(--custom-primary-text) !important;
 }
 
 // =============================================================================
-// App Menu Icons (Screenshot 3 fix)
+// App Menu Icons (Bug Fix #5)
 // =============================================================================
-// App icons in command palette / app switcher
+// App icons in command palette / app switcher / dropdown
 .o_command_palette .o_app_icon,
 .o_app_menu_sidebar .o_app_icon,
-.o_burger_menu .o_app_icon {
+.o_burger_menu .o_app_icon,
+.o_navbar_apps_menu .o_app_icon,
+.o_home_menu .o_app_icon,
+.dropdown-menu .o_app .o_app_icon {
+  --oi-color: var(--custom-primary) !important;
   color: var(--custom-primary) !important;
 }
 
@@ -306,16 +345,38 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
   --oi-color: var(--custom-primary) !important;
 }
 
+// App icon loading spinner
+.o_navbar_apps_menu .fa-circle-o-notch,
+.o_home_menu .fa-circle-o-notch {
+  color: var(--custom-primary) !important;
+}
+
 // =============================================================================
-// Form Notebook Tabs (Screenshot 4 fix)
+// Form Notebook Tabs (Bug Fix #7 & #8)
 // =============================================================================
 .o_notebook {
   // Override the CSS variable for active tab accent color
   --notebook-link-border-color-active-accent: var(--custom-primary) !important;
+}
 
-  .nav-link.active {
-    color: var(--custom-primary) !important;
-    border-top-color: var(--custom-primary) !important;
+// Bug Fix #7: Active tab text should be BLACK (not themed) - HIGH SPECIFICITY
+.o_form_view .o_notebook .nav-tabs .nav-item .nav-link.active,
+.o_notebook .nav-tabs .nav-item .nav-link.active,
+.o_notebook > .nav-tabs > .nav-item > .nav-link.active,
+.o_notebook .nav-link.active {
+  color: #000000 !important;
+  border-top-color: var(--custom-primary) !important;
+}
+
+// Bug Fix #8: Inactive tab text should use custom primary - HIGH SPECIFICITY
+.o_form_view .o_notebook .nav-tabs .nav-item .nav-link:not(.active),
+.o_notebook .nav-tabs .nav-item .nav-link:not(.active),
+.o_notebook > .nav-tabs > .nav-item > .nav-link:not(.active),
+.o_notebook .nav-link:not(.active) {
+  color: var(--custom-primary) !important;
+
+  &:hover {
+    color: var(--custom-primary-hover) !important;
   }
 }
 
@@ -339,16 +400,40 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 }
 
 // =============================================================================
-// Smart Buttons (Form view stat buttons)
+// Smart Buttons (Bug Fix #6 - Form view stat buttons)
 // =============================================================================
-.oe_button_box .oe_stat_button {
+// Note: Odoo 18 uses .o-form-buttonbox (hyphen) not .oe_button_box (underscore)
+.oe_stat_button {
+  --o-stat-button-color: var(--custom-primary) !important;
+
   &:hover {
     border-color: var(--custom-primary) !important;
   }
 
-  .o_stat_info .o_stat_value {
-    color: var(--custom-primary);
+  // Button icons - use !important to override Odoo defaults
+  .o_button_icon {
+    color: var(--custom-primary) !important;
   }
+
+  .o_stat_info .o_stat_value {
+    color: var(--custom-primary) !important;
+  }
+}
+
+// High specificity selectors for stat button icons
+.o-form-buttonbox .oe_stat_button .o_button_icon,
+.o_form_view .oe_stat_button .o_button_icon,
+.oe_stat_button .o_button_icon.fa,
+.oe_stat_button i.o_button_icon,
+.oe_stat_button i.fa.o_button_icon {
+  color: var(--custom-primary) !important;
+}
+
+// Stat values with high specificity
+.o-form-buttonbox .oe_stat_button .o_stat_info .o_stat_value,
+.o_form_view .oe_stat_button .o_stat_info .o_stat_value,
+.oe_stat_button .o_stat_info .o_stat_value {
+  color: var(--custom-primary) !important;
 }
 
 // =============================================================================
