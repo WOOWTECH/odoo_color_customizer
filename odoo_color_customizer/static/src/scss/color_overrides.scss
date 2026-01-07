@@ -241,3 +241,119 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 .o_ChatterTopbar {
   border-bottom-color: var(--custom-primary) !important;
 }
+
+// =============================================================================
+// Settings Sidebar (Screenshot 1 & 2 fix)
+// =============================================================================
+.o_base_settings_view .settings_tab {
+  // Selected tab left border and background
+  .selected {
+    box-shadow: inset 3px 0 0 var(--custom-primary) !important;
+  }
+
+  // Tab icon color when selected
+  .tab.selected .icon,
+  .tab.selected .oi,
+  .tab.selected .fa {
+    color: var(--custom-primary) !important;
+  }
+}
+
+// =============================================================================
+// Tags / Badges (Screenshot 1 - Pending Invitations)
+// =============================================================================
+// Default tags use color_0 which is the primary/purple color
+.o_tag.o_tag_color_0 {
+  background-color: var(--custom-primary-light) !important;
+  color: var(--custom-primary) !important;
+}
+
+// Solid/filled tags
+.o_tag.rounded-pill,
+.o_tag_badge_text {
+  background-color: var(--custom-primary) !important;
+  color: var(--custom-primary-text) !important;
+}
+
+// Many2many tags in form view
+.o_field_many2many_tags .o_tag.o_tag_color_0 {
+  background-color: var(--custom-primary-light) !important;
+  color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// Enterprise Badge (Screenshot 2 fix)
+// =============================================================================
+.o_enterprise_label .badge,
+.badge.text-bg-odoo,
+.badge.bg-odoo {
+  background-color: var(--custom-primary) !important;
+  color: var(--custom-primary-text) !important;
+}
+
+// =============================================================================
+// App Menu Icons (Screenshot 3 fix)
+// =============================================================================
+// App icons in command palette / app switcher
+.o_command_palette .o_app_icon,
+.o_app_menu_sidebar .o_app_icon,
+.o_burger_menu .o_app_icon {
+  color: var(--custom-primary) !important;
+}
+
+// UI App icons
+.o_ui_app_icon {
+  --oi-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// Form Notebook Tabs (Screenshot 4 fix)
+// =============================================================================
+.o_notebook {
+  // Override the CSS variable for active tab accent color
+  --notebook-link-border-color-active-accent: var(--custom-primary) !important;
+
+  .nav-link.active {
+    color: var(--custom-primary) !important;
+    border-top-color: var(--custom-primary) !important;
+  }
+}
+
+// Vertical notebook (left-side tabs)
+.o_notebook.vertical .nav-link.active {
+  border-left-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// Radio Buttons (additional form elements)
+// =============================================================================
+.form-check-input[type="radio"]:checked {
+  border-color: var(--custom-primary) !important;
+  background-color: var(--custom-primary) !important;
+}
+
+// Switch/toggle buttons
+.form-switch .form-check-input:checked {
+  background-color: var(--custom-primary) !important;
+  border-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// Smart Buttons (Form view stat buttons)
+// =============================================================================
+.oe_button_box .oe_stat_button {
+  &:hover {
+    border-color: var(--custom-primary) !important;
+  }
+
+  .o_stat_info .o_stat_value {
+    color: var(--custom-primary);
+  }
+}
+
+// =============================================================================
+// Loading Indicator
+// =============================================================================
+.o_loading_indicator {
+  background-color: var(--custom-primary) !important;
+}
