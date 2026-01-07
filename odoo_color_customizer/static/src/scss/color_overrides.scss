@@ -1,17 +1,17 @@
 /**
  * Color Customizer - CSS Variable Overrides
  *
- * This file overrides Odoo's default purple (#714B67) with custom colors
+ * This file overrides Odoo's default purple with custom colors
  * set via CSS custom properties. The properties are loaded from the
  * /color_customizer/theme.css endpoint.
  */
 
 :root {
-  // Fallback values if custom properties not loaded
-  --custom-primary: var(--o-brand-odoo, #714B67);
-  --custom-primary-hover: #5a3c52;
-  --custom-primary-active: #4a3244;
-  --custom-primary-light: #f0e8ed;
+  // Fallback values - Odoo 18 Community defaults (from $o-community-color: #71639e)
+  --custom-primary: var(--o-brand-odoo, #71639e);
+  --custom-primary-hover: #66598f;    // 10% darker
+  --custom-primary-active: #5b4f80;   // 20% darker
+  --custom-primary-light: #eeedf2;    // 85% lighter
   --custom-primary-text: #ffffff;
 }
 

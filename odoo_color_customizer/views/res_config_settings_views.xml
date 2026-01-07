@@ -30,7 +30,7 @@
                                             string="Reset to Default"
                                             class="btn-secondary"
                                             icon="fa-undo"
-                                            confirm="Reset primary color to Odoo default (#714B67)?"/>
+                                            confirm="Reset primary color to Odoo default (#71639e)?"/>
                                 </div>
                             </div>
                         </div>

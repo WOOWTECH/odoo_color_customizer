@@ -6,8 +6,8 @@ Serves dynamic CSS with custom primary color variables.
 from odoo import http
 from odoo.http import request
 
-# Default Odoo purple color
-DEFAULT_PRIMARY_COLOR = '#714B67'
+# Default Odoo Community purple color (from primary_variables.scss: $o-community-color)
+DEFAULT_PRIMARY_COLOR = '#71639e'
 
 
 class ColorCustomizerController(http.Controller):
@@ -89,7 +89,7 @@ class ColorCustomizerController(http.Controller):
         Darken a hex color by a percentage.
 
         Args:
-            hex_color: Hex color string (e.g., '#714B67')
+            hex_color: Hex color string (e.g., '#71639e')
             amount: Percentage to darken (0.0 to 1.0)
 
         Returns:
@@ -104,7 +104,7 @@ class ColorCustomizerController(http.Controller):
         Lighten a hex color by a percentage.
 
         Args:
-            hex_color: Hex color string (e.g., '#714B67')
+            hex_color: Hex color string (e.g., '#71639e')
             amount: Percentage to lighten (0.0 to 1.0)
 
         Returns:

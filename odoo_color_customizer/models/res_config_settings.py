@@ -5,8 +5,8 @@ Extends res.config.settings to add primary color configuration.
 """
 from odoo import api, fields, models
 
-# Default Odoo purple color
-DEFAULT_PRIMARY_COLOR = '#714B67'
+# Default Odoo Community purple color (from primary_variables.scss: $o-community-color)
+DEFAULT_PRIMARY_COLOR = '#71639e'
 
 
 class ResConfigSettings(models.TransientModel):
@@ -22,7 +22,7 @@ class ResConfigSettings(models.TransientModel):
     )
 
     def action_reset_primary_color(self):
-        """Reset primary color to Odoo default purple (#714B67)."""
+        """Reset primary color to Odoo Community default (#71639e)."""
         self.env['ir.config_parameter'].sudo().set_param(
             'odoo_color_customizer.primary_color',
             DEFAULT_PRIMARY_COLOR

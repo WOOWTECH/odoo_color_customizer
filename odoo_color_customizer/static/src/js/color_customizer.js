@@ -19,7 +19,7 @@ const CSS_ENDPOINT = '/color_customizer/theme.css';
 
 /**
  * Convert hex color to RGB object
- * @param {string} hex - Hex color (e.g., '#714B67')
+ * @param {string} hex - Hex color (e.g., '#71639e')
  * @returns {Object|null} RGB object with r, g, b properties
  */
 function hexToRgb(hex) {
@@ -101,7 +101,9 @@ async function loadColorTheme() {
     }
 
     try {
-        const response = await fetch(CSS_ENDPOINT);
+        // Add cache-busting parameter to ensure fresh CSS
+        const cacheBuster = `?t=${Date.now()}`;
+        const response = await fetch(CSS_ENDPOINT + cacheBuster, { cache: 'no-store' });
         if (response.ok) {
             const css = await response.text();
             const style = document.createElement('style');
@@ -124,7 +126,21 @@ async function refreshThemeCSS() {
     }
     // Clear inline styles
     clearInlineStyles();
-    await loadColorTheme();
+
+    // Force reload with cache bypass
+    try {
+        const cacheBuster = `?t=${Date.now()}`;
+        const response = await fetch(CSS_ENDPOINT + cacheBuster, { cache: 'no-store' });
+        if (response.ok) {
+            const css = await response.text();
+            const style = document.createElement('style');
+            style.id = COLOR_CSS_ID;
+            style.textContent = css;
+            document.head.appendChild(style);
+        }
+    } catch (error) {
+        console.warn('[ColorCustomizer] Could not refresh theme CSS:', error);
+    }
 }
 
 /**
