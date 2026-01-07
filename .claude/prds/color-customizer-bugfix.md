@@ -3,7 +3,7 @@ name: color-customizer-bugfix
 description: Fix critical bugs in odoo_color_customizer module - incorrect default color and incomplete coverage
 status: backlog
 created: 2026-01-07T04:58:16Z
-updated: 2026-01-07T05:25:18Z
+updated: 2026-01-07T05:37:43Z
 ---
 
 # PRD: Color Customizer Bug Fixes
@@ -469,16 +469,34 @@ Manual testing checklist for verification:
 
 **Target Environment:**
 - Home Assistant server: 192.168.2.254
+- SSH access: `ssh ha-192-168-2-254`
+- Custom addons path: `/addon_configs/local_odoo/odoo_custom_addons`
 - Docker container: addon_local_odoo
-- Odoo web URL: http://192.168.2.254:18070 (local) or https://matt-test-254-odoo.woowtech.io/ (public)
+- Odoo web URL: https://matt-test-254-odoo.woowtech.io/ (public)
 
 **Deploy Command:**
 ```bash
-# Copy module to Odoo addons directory
-docker cp odoo_color_customizer addon_local_odoo:/opt/odoo/addons/
+# 1. SSH into Home Assistant server
+ssh ha-192-168-2-254
 
-# Restart Odoo service
+# 2. Copy module files to custom addons directory
+# From local machine, use scp or rsync:
+scp -r odoo_color_customizer/ ha-192-168-2-254:/addon_configs/local_odoo/odoo_custom_addons/
+
+# 3. Restart Odoo service (from HA terminal)
 docker exec addon_local_odoo supervisorctl restart odoo
+```
+
+**Alternative Deploy (if scp fails):**
+```bash
+# Create tarball locally
+tar -czf /tmp/odoo_color_customizer.tar.gz odoo_color_customizer/
+
+# Copy via SSH and extract
+cat /tmp/odoo_color_customizer.tar.gz | ssh ha-192-168-2-254 "cd /addon_configs/local_odoo/odoo_custom_addons && tar -xzf -"
+
+# Restart Odoo
+ssh ha-192-168-2-254 "docker exec addon_local_odoo supervisorctl restart odoo"
 ```
 
 **Rollback Command:**
@@ -486,7 +504,18 @@ docker exec addon_local_odoo supervisorctl restart odoo
 # Revert to previous version using git
 git checkout HEAD~1 -- odoo_color_customizer/
 
-# Re-deploy
-docker cp odoo_color_customizer addon_local_odoo:/opt/odoo/addons/
-docker exec addon_local_odoo supervisorctl restart odoo
+# Re-deploy to server
+scp -r odoo_color_customizer/ ha-192-168-2-254:/addon_configs/local_odoo/odoo_custom_addons/
+
+# Restart Odoo
+ssh ha-192-168-2-254 "docker exec addon_local_odoo supervisorctl restart odoo"
+```
+
+**Verify Deployment:**
+```bash
+# Check module files exist
+ssh ha-192-168-2-254 "ls -la /addon_configs/local_odoo/odoo_custom_addons/odoo_color_customizer/"
+
+# Check Odoo logs for errors
+ssh ha-192-168-2-254 "docker logs addon_local_odoo --tail 50"
 ```
