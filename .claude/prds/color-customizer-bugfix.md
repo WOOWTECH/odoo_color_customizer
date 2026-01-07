@@ -3,7 +3,7 @@ name: color-customizer-bugfix
 description: Fix critical bugs in odoo_color_customizer module - incorrect default color and incomplete coverage
 status: backlog
 created: 2026-01-07T04:58:16Z
-updated: 2026-01-07T05:20:38Z
+updated: 2026-01-07T05:25:18Z
 ---
 
 # PRD: Color Customizer Bug Fixes
@@ -11,6 +11,149 @@ updated: 2026-01-07T05:20:38Z
 ## Executive Summary
 
 The `odoo_color_customizer` Odoo 18 module has critical bugs that prevent it from functioning correctly in production. The module uses the **wrong default color** (`#714B67` Enterprise color instead of `#71639e` Community color), causing the reset function to produce a different appearance than a clean Odoo installation. Additionally, some UI elements are not properly overridden when changing colors. This PRD defines the requirements to fix all known bugs and ensure 100% functionality.
+
+## Mandatory Bug Resolution Process
+
+**CRITICAL**: All bug fixes MUST follow this 5-step process to ensure 100% resolution:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    BUG RESOLUTION PROCESS FLOW                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│   Step 1: RESEARCH          Step 2: PLAN            Step 3: REVIEW     │
+│   ┌──────────────┐         ┌──────────────┐        ┌──────────────┐    │
+│   │ Deep research│────────▶│ Create fix   │───────▶│ Review fix   │    │
+│   │ cause of bug │         │ plan         │        │ plan         │    │
+│   └──────────────┘         └──────────────┘        └──────────────┘    │
+│          │                                                │             │
+│          │ Reference:                                     │             │
+│          │ Odoo_18_Environment_Architecture               │             │
+│          │                                                ▼             │
+│   Step 5: DEPLOY TEST       Step 4: IMPLEMENT      ┌──────────────┐    │
+│   ┌──────────────┐         ┌──────────────┐        │ Approved?    │    │
+│   │ playwright   │◀────────│ Implement    │◀───────│ YES ──────── │    │
+│   │ headed mode  │         │ fix plan     │        │ NO → revise  │    │
+│   └──────────────┘         └──────────────┘        └──────────────┘    │
+│          │                                                              │
+│          ▼                                                              │
+│   ┌──────────────┐         ┌──────────────┐                            │
+│   │ Test PASS?   │────NO──▶│ ROLLBACK     │────▶ Return to Step 1      │
+│   │              │         │ changes      │                            │
+│   └──────────────┘         └──────────────┘                            │
+│          │                                                              │
+│          YES                                                            │
+│          ▼                                                              │
+│   ┌──────────────┐                                                     │
+│   │ BUG RESOLVED │                                                     │
+│   │ ✓ Complete   │                                                     │
+│   └──────────────┘                                                     │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Step 1: Deep Research the Cause of Bug
+
+**Objective**: Understand the root cause before attempting any fix.
+
+**Actions Required**:
+1. Examine the bug report and screenshots
+2. Reproduce the bug in the test environment
+3. Use browser dev tools to inspect actual vs expected CSS values
+4. Reference Odoo 18 source code at:
+   - `/mnt/c/Users/Matt/Desktop/CLAUDE專案/ODOO相關/Odoo_18_Environment_Architecture`
+5. Document findings with evidence (screenshots, console logs, CSS values)
+
+**Output**: Research summary with:
+- Exact root cause identified
+- Files/lines causing the issue
+- Comparison data (expected vs actual)
+
+### Step 2: Create a Fix Plan
+
+**Objective**: Define exactly what changes will be made.
+
+**Actions Required**:
+1. List all files to be modified
+2. Specify exact code changes (line-by-line if needed)
+3. Identify potential side effects
+4. Define rollback procedure
+
+**Output**: Fix plan document with:
+- Change list with file paths
+- Before/after code snippets
+- Risk assessment
+- Rollback commands
+
+### Step 3: Review Fix Plan
+
+**Objective**: Validate the plan before implementation.
+
+**Actions Required**:
+1. Cross-reference changes with Odoo 18 architecture
+2. Verify changes don't break existing functionality
+3. Check CSS specificity and selector correctness
+4. Confirm all affected elements are covered
+
+**Output**: Approved/Rejected decision with:
+- Review notes
+- Any required modifications
+- Final approval to proceed
+
+### Step 4: Implement Fix Plan
+
+**Objective**: Execute the approved changes.
+
+**Actions Required**:
+1. Make code changes exactly as specified in plan
+2. Commit changes with descriptive message
+3. Verify syntax and no errors in modified files
+
+**Output**:
+- Code changes committed
+- Ready for deployment testing
+
+### Step 5: Deploy Test with Playwright (Headed Mode)
+
+**Objective**: Verify fix works in real Odoo environment.
+
+**Actions Required**:
+1. Deploy changes to test server (https://matt-test-254-odoo.woowtech.io/)
+2. Use playwright-mcp in **headed mode** to test:
+   - Navigate to Settings > General Settings
+   - Change primary color to test color (e.g., red #ff0000)
+   - Take screenshot for comparison
+   - Click "Reset to Default"
+   - Take screenshot for comparison
+   - Compare with clean Odoo server
+3. Verify all acceptance criteria pass
+
+**Pass Criteria**:
+- All purple elements change to custom color
+- Reset produces identical appearance to clean Odoo
+- No console errors
+- No visual artifacts
+
+**If Test FAILS**:
+1. **ROLLBACK** all changes immediately
+2. Document what failed and why
+3. Return to Step 1 with new findings
+
+### Reference Architecture
+
+For all debugging and research, reference the Odoo 18 Environment Architecture:
+```
+/mnt/c/Users/Matt/Desktop/CLAUDE專案/ODOO相關/Odoo_18_Environment_Architecture/
+├── odoo-18.0.post20251202/
+│   └── odoo/
+│       └── addons/
+│           └── web/
+│               └── static/
+│                   └── src/
+│                       └── scss/
+│                           └── primary_variables.scss  ← Color definitions
+```
+
+---
 
 ## Problem Statement
 
@@ -321,3 +464,29 @@ Manual testing checklist for verification:
 ### A4: Reference URLs
 - Clean Odoo 18 Server: https://matt-test-6-odoo.woowtech.io/ (admin/admin)
 - Test Server with Module: https://matt-test-254-odoo.woowtech.io/ (admin/admin)
+
+### A5: Deployment Instructions
+
+**Target Environment:**
+- Home Assistant server: 192.168.2.254
+- Docker container: addon_local_odoo
+- Odoo web URL: http://192.168.2.254:18070 (local) or https://matt-test-254-odoo.woowtech.io/ (public)
+
+**Deploy Command:**
+```bash
+# Copy module to Odoo addons directory
+docker cp odoo_color_customizer addon_local_odoo:/opt/odoo/addons/
+
+# Restart Odoo service
+docker exec addon_local_odoo supervisorctl restart odoo
+```
+
+**Rollback Command:**
+```bash
+# Revert to previous version using git
+git checkout HEAD~1 -- odoo_color_customizer/
+
+# Re-deploy
+docker cp odoo_color_customizer addon_local_odoo:/opt/odoo/addons/
+docker exec addon_local_odoo supervisorctl restart odoo
+```
