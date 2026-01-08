@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Color Customizer',
-    'version': '18.0.1.0.1',
+    'version': '18.0.1.0.2',
     'category': 'Customizations',
     'summary': 'Customize Odoo primary brand color',
     'description': """

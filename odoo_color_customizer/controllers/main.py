@@ -101,6 +101,77 @@ class ColorCustomizerController(http.Controller):
 .o_main_navbar .o_navbar_apps_menu .dropdown-toggle:focus {{
     background: {hover_color} !important;
 }}
+
+/* ============================================================================
+   BUG FIX 1: Email badge/tag outline color
+   Elements like "123@123" and "testuser@example.com" in Settings
+   ============================================================================ */
+.badge.border-primary,
+.badge.text-primary {{
+    outline-color: {primary_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 2: Focused input field border color
+   When clicking any input field, the border should use primary color
+   ============================================================================ */
+.o_input:focus,
+.o_input:focus-within,
+textarea.o_input:focus,
+input.o_input:focus,
+.o_field_widget input:focus,
+.o_field_widget textarea:focus {{
+    border-color: {primary_color} !important;
+    box-shadow: 0 0 0 0.2rem {light_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 3: Activity schedule arrow buttons (Inbox, Today, This Week, etc.)
+   The ::before pseudo-element creates the arrow shape background
+   ============================================================================ */
+.o_arrow_button_current {{
+    background-color: {light_color} !important;
+    border-color: {primary_color} !important;
+}}
+
+.o_arrow_button_current::before {{
+    background-color: {primary_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 4: Calendar current day indicator (mini calendar)
+   The ::before creates the circular background on today's date
+   ============================================================================ */
+.o_today::before,
+.o_datetime_picker .o_today::before,
+.o_date_item_cell.o_today::before {{
+    background-color: {light_color} !important;
+}}
+
+.o_selected.o_today::before {{
+    background-color: {primary_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 5 & 6: View switch buttons and graph buttons (active state)
+   These appear in Sales, Purchase Analysis, and other list/graph views
+   ============================================================================ */
+.o_switch_view.active,
+.o_graph_button.active,
+.btn-secondary.o_switch_view.active,
+.btn-secondary.o_graph_button.active {{
+    background-color: {light_color} !important;
+    border-color: {primary_color} !important;
+    color: {primary_color} !important;
+}}
+
+.o_switch_view.active:hover,
+.o_switch_view.active:focus,
+.o_graph_button.active:hover,
+.o_graph_button.active:focus {{
+    background-color: {light_color} !important;
+    border-color: {hover_color} !important;
+}}
 """
 
         return request.make_response(
