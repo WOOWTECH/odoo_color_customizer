@@ -41,7 +41,7 @@ class ColorCustomizerController(http.Controller):
         light_color = self._lighten_color(primary_color, 0.85)
         text_color = self._get_contrast_color(primary_color)
 
-        # Generate CSS with custom properties
+        # Generate CSS with custom properties and critical overrides
         css = f""":root {{
     /* Custom primary color */
     --custom-primary: {primary_color};
@@ -53,6 +53,53 @@ class ColorCustomizerController(http.Controller):
     /* Override Odoo brand colors */
     --o-brand-odoo: {primary_color};
     --o-brand-primary: {primary_color};
+}}
+
+/* ============================================================================
+   CRITICAL: Navbar dropdown toggle overrides
+   These rules are served dynamically to ensure they override Odoo's defaults
+   ============================================================================ */
+
+/* Set CSS variable on navbar to override Odoo's fallback */
+.o_main_navbar {{
+    --NavBar-entry-backgroundColor: {primary_color};
+    --NavBar-entry-backgroundColor--hover: {hover_color};
+    --NavBar-entry-backgroundColor--focus: {hover_color};
+    --NavBar-entry-backgroundColor--active: {active_color};
+    border-bottom-color: {primary_color} !important;
+}}
+
+/* Dropdown toggle buttons in menu sections */
+.o_main_navbar .o_menu_sections .dropdown-toggle,
+.o_main_navbar .o_menu_sections .o-dropdown.dropdown-toggle,
+.o_main_navbar .o_menu_sections button.dropdown-toggle,
+.o_main_navbar .o_menu_sections .o-dropdown {{
+    background: {primary_color} !important;
+}}
+
+.o_main_navbar .o_menu_sections .dropdown-toggle:hover,
+.o_main_navbar .o_menu_sections .dropdown-toggle:focus,
+.o_main_navbar .o_menu_sections .o-dropdown:hover,
+.o_main_navbar .o_menu_sections .o-dropdown:focus {{
+    background: {hover_color} !important;
+}}
+
+.o_main_navbar .o_menu_sections .dropdown-toggle.show,
+.o_main_navbar .o_menu_sections .dropdown-toggle[aria-expanded="true"],
+.o_main_navbar .o_menu_sections .o-dropdown.show,
+.o_main_navbar .o_menu_sections .o-dropdown[aria-expanded="true"] {{
+    background: {active_color} !important;
+}}
+
+/* Apps menu dropdown */
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle,
+.o_main_navbar .o_navbar_apps_menu .o-dropdown {{
+    background: {primary_color} !important;
+}}
+
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle:hover,
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle:focus {{
+    background: {hover_color} !important;
 }}
 """
 

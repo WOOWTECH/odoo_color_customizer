@@ -19,7 +19,14 @@
 // Navbar
 // =============================================================================
 .o_main_navbar {
+  // Override Odoo's NavBar CSS variables (no !important for CSS vars)
+  --NavBar-entry-backgroundColor: var(--custom-primary);
+  --NavBar-entry-backgroundColor--hover: var(--custom-primary-hover);
+  --NavBar-entry-backgroundColor--focus: var(--custom-primary-hover);
+  --NavBar-entry-backgroundColor--active: var(--custom-primary-active);
+
   background-color: var(--custom-primary) !important;
+  border-bottom-color: var(--custom-primary) !important;  // B2: Navbar border
 
   // Bug Fix #1: Navbar menu items background
   .o_menu_sections .o_nav_entry {
@@ -33,6 +40,64 @@
       background: var(--custom-primary-active) !important;
     }
   }
+
+  // B1: Dropdown toggle buttons in menu sections (CRITICAL)
+  // Use 'background' shorthand to override Odoo's 'background: var(--NavBar-entry-backgroundColor, #71639e)'
+  .o_menu_sections .o-dropdown.dropdown-toggle,
+  .o_menu_sections > .o-dropdown > .dropdown-toggle,
+  .o_menu_sections button.dropdown-toggle,
+  .o_menu_sections .o-dropdown.dropdown-toggle.dropdown,
+  .o_menu_sections .dropdown-toggle {
+    background: var(--custom-primary) !important;
+
+    &:hover, &:focus {
+      background: var(--custom-primary-hover) !important;
+    }
+
+    &.show, &[aria-expanded="true"] {
+      background: var(--custom-primary-active) !important;
+    }
+  }
+
+  // B1b: Apps menu dropdown toggle (hamburger menu and app switcher)
+  .o_navbar_apps_menu .o-dropdown.dropdown-toggle,
+  .o_navbar_apps_menu .dropdown-toggle {
+    background: var(--custom-primary) !important;
+
+    &:hover, &:focus {
+      background: var(--custom-primary-hover) !important;
+    }
+
+    &.show, &[aria-expanded="true"] {
+      background: var(--custom-primary-active) !important;
+    }
+  }
+}
+
+// =============================================================================
+// Navbar Dropdown Toggles (ROOT LEVEL - higher specificity)
+// =============================================================================
+// These rules are at root level to ensure proper SCSS compilation
+
+.o_main_navbar .o_menu_sections .dropdown-toggle,
+.o_main_navbar .o_menu_sections .o-dropdown.dropdown-toggle,
+.o_main_navbar .o_menu_sections button.dropdown-toggle,
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle {
+  background: var(--custom-primary) !important;
+}
+
+.o_main_navbar .o_menu_sections .dropdown-toggle:hover,
+.o_main_navbar .o_menu_sections .dropdown-toggle:focus,
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle:hover,
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle:focus {
+  background: var(--custom-primary-hover) !important;
+}
+
+.o_main_navbar .o_menu_sections .dropdown-toggle.show,
+.o_main_navbar .o_menu_sections .dropdown-toggle[aria-expanded="true"],
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle.show,
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle[aria-expanded="true"] {
+  background: var(--custom-primary-active) !important;
 }
 
 // =============================================================================
@@ -441,4 +506,63 @@ span.badge:not(.bg-success):not(.bg-danger):not(.bg-warning):not(.bg-secondary):
 // =============================================================================
 .o_loading_indicator {
   background-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// NEW BUG FIXES (2026-01-08)
+// =============================================================================
+
+// B3 & B4: Search Input and Dropdown Toggler
+.o_searchview.form-control,
+.o_searchview,
+div.o_searchview {
+  border-color: var(--custom-primary) !important;
+
+  &:focus, &:focus-within {
+    border-color: var(--custom-primary) !important;
+    box-shadow: 0 0 0 0.2rem var(--custom-primary-light) !important;
+  }
+}
+
+.o_searchview_dropdown_toggler {
+  border-color: var(--custom-primary) !important;
+}
+
+// B5: Secondary Buttons (Switch View, FA icons in toolbars)
+.btn.btn-secondary.o_switch_view,
+.btn.btn-secondary.fa,
+.o_cp_switch_buttons .btn.btn-secondary,
+button.btn.btn-secondary.o_switch_view,
+button.btn.btn-secondary.fa {
+  border-color: var(--custom-primary) !important;
+
+  &:hover, &:focus {
+    border-color: var(--custom-primary-hover) !important;
+  }
+
+  &.active {
+    border-color: var(--custom-primary) !important;
+    color: var(--custom-primary) !important;
+  }
+}
+
+// B6: Smart Button Stat Values (Higher Specificity)
+// Some stat buttons have span.o_stat_info instead of div
+span.o_stat_info .o_stat_value,
+.oe_stat_button span.o_stat_info .o_stat_value,
+.o-form-buttonbox .oe_stat_button span.o_stat_value,
+.oe_stat_button .o_stat_value,
+span.o_stat_value {
+  color: var(--custom-primary) !important;
+}
+
+// B7: All Input Focus States
+input:focus,
+textarea:focus,
+select:focus,
+.o_input:focus,
+input.o_input:focus,
+textarea.o_input:focus {
+  border-color: var(--custom-primary) !important;
+  outline-color: var(--custom-primary) !important;
 }
