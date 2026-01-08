@@ -172,6 +172,86 @@ input.o_input:focus,
     background-color: {light_color} !important;
     border-color: {hover_color} !important;
 }}
+
+/* ============================================================================
+   BUG FIX 7: Input field HOVER border color
+   When hovering any input field, the border should use primary color
+   ============================================================================ */
+.form-check:hover,
+.form-check:hover .form-check-input:not(:disabled) {{
+    border-color: {primary_color} !important;
+}}
+
+.form-select:where(:not(:disabled)):hover {{
+    border-color: {primary_color} !important;
+}}
+
+.form-switch.o_switch_toggle:hover .form-check-input:not(:disabled) {{
+    border-color: {primary_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 8: .btn-light active state (Toggle chatter button, etc.)
+   Override Bootstrap CSS variables for btn-light active state
+   ============================================================================ */
+.btn-light {{
+    --btn-active-bg: {light_color} !important;
+    --btn-active-border-color: {primary_color} !important;
+}}
+
+.btn-light:active,
+.btn-light.active,
+.btn-light:focus {{
+    background-color: {light_color} !important;
+    border-color: {primary_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 9: Calendar/DatePicker day hover and selected states
+   When hovering or clicking on calendar days
+   ============================================================================ */
+.o_datetime_picker .o_date_item_picker .o_datetime_button.o_selected:not(.o_select_start):not(.o_select_end),
+.o_datetime_picker .o_date_item_picker .o_datetime_button:hover:not(.o_select_start):not(.o_select_end),
+.o_datetime_picker .o_date_item_picker .o_datetime_button.o_today:not(.o_selected):hover:not(.o_select_start):not(.o_select_end) {{
+    background: {light_color} !important;
+    color: {primary_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 10: Tour pointer tip (guided tour tooltip)
+   Override CSS variables for tour pointer background color
+   ============================================================================ */
+.o_tour_pointer {{
+    --TourPointer__color: {primary_color} !important;
+    --TourPointer__color-accent: {hover_color} !important;
+}}
+
+.o_tour_pointer .o_tour_pointer_tip {{
+    background-color: {primary_color} !important;
+}}
+
+.o_tour_pointer .o_tour_pointer_tip::before {{
+    border-color: {primary_color} transparent transparent transparent !important;
+}}
+
+/* ============================================================================
+   BUG FIX 11: Primary link hover/focus colors
+   Links with btn-primary or text-primary class
+   ============================================================================ */
+.btn-link.btn-primary:hover,
+.btn-link.btn-primary:focus,
+.btn-link.text-primary:hover,
+.btn-link.text-primary:focus {{
+    color: {hover_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 12: Field widget focus-within border
+   Parent container when child input is focused
+   ============================================================================ */
+.o_field_widget:focus-within {{
+    border-color: {primary_color} !important;
+}}
 """
 
         return request.make_response(
