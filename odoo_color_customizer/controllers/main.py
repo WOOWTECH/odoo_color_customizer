@@ -252,6 +252,51 @@ input.o_input:focus,
 .o_field_widget:focus-within {{
     border-color: {primary_color} !important;
 }}
+
+/* ============================================================================
+   BUG FIX 13: Override --o-input-border-color CSS variable
+   This variable controls input border color for required/focused fields
+   ============================================================================ */
+.o_required_modifier {{
+    --o-input-border-color: {primary_color} !important;
+    --o-caret-color: {primary_color} !important;
+}}
+
+.o_field_widget:focus-within {{
+    --o-input-border-color: {primary_color} !important;
+    --o-caret-color: {primary_color} !important;
+}}
+
+.o_field_widget:hover {{
+    --o-input-border-color: {primary_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 14: Calendar mini picker selected/current day colors
+   Override the light purple background and purple border
+   ============================================================================ */
+.o_datetime_picker .o_selected:not(.o_select_start):not(.o_select_end) {{
+    background: {light_color} !important;
+}}
+
+.o_datetime_picker .o_current::before,
+.o_datetime_picker .o_highlighted::before,
+.o_datetime_picker .o_select_start::before,
+.o_datetime_picker .o_select_end::before {{
+    box-shadow: {primary_color} 0px 0px 0px 1px inset !important;
+}}
+
+.o_datetime_picker .o_select_start::before,
+.o_datetime_picker .o_select_end::before {{
+    background: {light_color} !important;
+}}
+
+.o_datetime_picker .o_select_start:not(.o_select_end)::after,
+.o_datetime_picker .o_select_end:not(.o_select_end)::after,
+.o_datetime_picker .o_select_start:not(.o_select_start)::after,
+.o_datetime_picker .o_select_end:not(.o_select_start)::after {{
+    background: {light_color} !important;
+}}
 """
 
         return request.make_response(
