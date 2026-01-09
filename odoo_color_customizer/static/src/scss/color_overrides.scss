@@ -346,26 +346,12 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 }
 
 // =============================================================================
-// Tags / Badges (Bug Fix #3 continued - Pending Invitations)
+// BUG FIX 18: Removed overly broad tag color rules
+// The previous rules incorrectly assumed:
+// 1. o_tag_color_0 is the primary/purple color (it's actually neutral gray)
+// 2. ALL .o_tag_badge_text should use primary color (too broad)
+// These rules were causing tax badges and other neutral tags to show primary color
 // =============================================================================
-// Default tags use color_0 which is the primary/purple color
-.o_tag.o_tag_color_0 {
-  background-color: var(--custom-primary-light) !important;
-  color: var(--custom-primary) !important;
-}
-
-// Solid/filled tags
-.o_tag.rounded-pill,
-.o_tag_badge_text {
-  background-color: var(--custom-primary) !important;
-  color: var(--custom-primary-text) !important;
-}
-
-// Many2many tags in form view
-.o_field_many2many_tags .o_tag.o_tag_color_0 {
-  background-color: var(--custom-primary-light) !important;
-  color: var(--custom-primary) !important;
-}
 
 // =============================================================================
 // Enterprise Badge (Bug Fix #4)
