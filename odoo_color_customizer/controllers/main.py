@@ -127,15 +127,11 @@ input.o_input:focus,
 
 /* ============================================================================
    BUG FIX 3: Activity schedule arrow buttons (Inbox, Today, This Week, etc.)
-   The ::before pseudo-element creates the arrow shape background
+   NOTE: Removed border-color and ::before overrides - Original Odoo has
+   black borders, not primary color borders
    ============================================================================ */
 .o_arrow_button_current {{
     background-color: {light_color} !important;
-    border-color: {primary_color} !important;
-}}
-
-.o_arrow_button_current::before {{
-    background-color: {primary_color} !important;
 }}
 
 /* ============================================================================
@@ -162,7 +158,13 @@ input.o_input:focus,
 .btn-secondary.o_graph_button.active {{
     background-color: {light_color} !important;
     border-color: {primary_color} !important;
-    color: {primary_color} !important;
+    /* NOTE: Removed color override - text should stay dark gray like Original Odoo */
+}}
+
+/* CRITICAL FIX: Override the SCSS cached rule that sets purple text on active view switches */
+.o_control_panel .o_cp_switch_buttons .btn.active,
+.o_control_panel .o_cp_switch_buttons .btn.btn-secondary.active {{
+    color: #343a40 !important;
 }}
 
 .o_switch_view.active:hover,
@@ -296,6 +298,45 @@ input.o_input:focus,
 .o_datetime_picker .o_select_start:not(.o_select_start)::after,
 .o_datetime_picker .o_select_end:not(.o_select_start)::after {{
     background: {light_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 15: Search view should NOT have box-shadow on focus
+   Original Odoo only has border color change, no box-shadow
+   The input INSIDE searchview also needs box-shadow: none
+   ============================================================================ */
+.o_searchview:focus,
+.o_searchview:focus-within,
+.o_searchview.form-control:focus,
+.o_searchview.form-control:focus-within,
+.o_searchview input,
+.o_searchview input:focus,
+.o_searchview_input,
+.o_searchview_input:focus {{
+    box-shadow: none !important;
+}}
+
+/* ============================================================================
+   BUG FIX 16 (Enhanced): Form tabs (notebook) should NOT have primary color borders
+   Original Odoo has gray borders: rgb(222, 226, 230) for top/sides
+   Uses CSS variable override + maximum specificity selectors to beat SCSS
+   ============================================================================ */
+
+/* Override CSS variable that SCSS uses for tab border accent */
+.o_notebook {{
+    --notebook-link-border-color-active-accent: #dee2e6 !important;
+}}
+
+/* Maximum specificity selectors to beat SCSS cached rules (5+ classes) */
+html body .o_action .o_form_view .o_notebook .nav-tabs .nav-item .nav-link.active,
+.o_web_client .o_action .o_form_view .o_notebook .nav-tabs .nav-item .nav-link.active,
+.o_action_manager .o_form_view .o_notebook .nav-tabs .nav-item .nav-link.active,
+.o_form_view .o_notebook .nav-tabs .nav-item .nav-link.active,
+.o_notebook .nav-tabs .nav-item .nav-link.active {{
+    border-top-color: #dee2e6 !important;
+    border-left-color: #dee2e6 !important;
+    border-right-color: #dee2e6 !important;
+    border-bottom-color: transparent !important;
 }}
 """
 

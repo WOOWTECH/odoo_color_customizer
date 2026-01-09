@@ -263,10 +263,8 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 // =============================================================================
 // Tabs & Pills
 // =============================================================================
-.nav-tabs .nav-link.active {
-  color: var(--custom-primary) !important;
-  border-bottom-color: var(--custom-primary) !important;
-}
+// NOTE: Removed .nav-tabs .nav-link.active border override
+// Original Odoo has gray borders, not primary color
 
 .nav-pills .nav-link.active {
   background-color: var(--custom-primary) !important;
@@ -308,11 +306,6 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
   .o_facet_value {
     color: var(--custom-primary) !important;
   }
-}
-
-// Control panel
-.o_control_panel .o_cp_switch_buttons .btn.active {
-  color: var(--custom-primary) !important;
 }
 
 // Chatter
@@ -377,19 +370,19 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 // =============================================================================
 // Enterprise Badge (Bug Fix #4)
 // =============================================================================
+// Only target EXPLICIT Enterprise/Odoo badges - NOT all badges
 .o_enterprise_label .badge,
 .o_enterprise_label,
 .badge.text-bg-odoo,
 .badge.bg-odoo,
-.badge.text-bg-info,
-// Key fix: Enterprise badge uses text-bg-primary class
 .badge.text-bg-primary.o_enterprise_label,
 span.badge.text-bg-primary.o_enterprise_label,
-span.badge.o_enterprise_label,
-span.badge:not(.bg-success):not(.bg-danger):not(.bg-warning):not(.bg-secondary):not(.bg-info):not(.bg-light):not(.bg-dark) {
+span.badge.o_enterprise_label {
   background-color: var(--custom-primary) !important;
   color: var(--custom-primary-text) !important;
 }
+// NOTE: Removed overly broad "span.badge:not(.bg-*)" selector that was
+// incorrectly changing non-primary badges (like green "Pending" badges)
 
 // =============================================================================
 // App Menu Icons (Bug Fix #5)
@@ -419,18 +412,16 @@ span.badge:not(.bg-success):not(.bg-danger):not(.bg-warning):not(.bg-secondary):
 // =============================================================================
 // Form Notebook Tabs (Bug Fix #7 & #8)
 // =============================================================================
-.o_notebook {
-  // Override the CSS variable for active tab accent color
-  --notebook-link-border-color-active-accent: var(--custom-primary) !important;
-}
+// NOTE: Removed .o_notebook CSS variable override
+// Original Odoo has gray tab borders, not primary color
 
 // Bug Fix #7: Active tab text should be BLACK (not themed) - HIGH SPECIFICITY
+// NOTE: Removed border-top-color override - Original Odoo has gray borders
 .o_form_view .o_notebook .nav-tabs .nav-item .nav-link.active,
 .o_notebook .nav-tabs .nav-item .nav-link.active,
 .o_notebook > .nav-tabs > .nav-item > .nav-link.active,
 .o_notebook .nav-link.active {
   color: #000000 !important;
-  border-top-color: var(--custom-primary) !important;
 }
 
 // Bug Fix #8: Inactive tab text should use custom primary - HIGH SPECIFICITY
@@ -445,10 +436,7 @@ span.badge:not(.bg-success):not(.bg-danger):not(.bg-warning):not(.bg-secondary):
   }
 }
 
-// Vertical notebook (left-side tabs)
-.o_notebook.vertical .nav-link.active {
-  border-left-color: var(--custom-primary) !important;
-}
+// NOTE: Removed vertical notebook border override - keep original gray borders
 
 // =============================================================================
 // Radio Buttons (additional form elements)
@@ -513,22 +501,26 @@ span.badge:not(.bg-success):not(.bg-danger):not(.bg-warning):not(.bg-secondary):
 // =============================================================================
 
 // B3 & B4: Search Input and Dropdown Toggler
-.o_searchview.form-control,
-.o_searchview,
-div.o_searchview {
+// NOTE: Only apply primary color on FOCUS, not default state
+// Default state should keep gray border to match Original Odoo
+.o_searchview.form-control:focus,
+.o_searchview.form-control:focus-within,
+.o_searchview:focus,
+.o_searchview:focus-within,
+div.o_searchview:focus,
+div.o_searchview:focus-within {
   border-color: var(--custom-primary) !important;
-
-  &:focus, &:focus-within {
-    border-color: var(--custom-primary) !important;
-    box-shadow: 0 0 0 0.2rem var(--custom-primary-light) !important;
-  }
+  // NOTE: Removed box-shadow - Original Odoo doesn't have one on search focus
 }
 
-.o_searchview_dropdown_toggler {
+// Dropdown toggler only on focus
+.o_searchview_dropdown_toggler:focus,
+.o_searchview_dropdown_toggler:hover {
   border-color: var(--custom-primary) !important;
 }
 
 // B5: Secondary Buttons (Switch View, FA icons in toolbars)
+// NOTE: Only style BORDER color, not TEXT color - text should stay dark gray
 .btn.btn-secondary.o_switch_view,
 .btn.btn-secondary.fa,
 .o_cp_switch_buttons .btn.btn-secondary,
@@ -542,8 +534,16 @@ button.btn.btn-secondary.fa {
 
   &.active {
     border-color: var(--custom-primary) !important;
-    color: var(--custom-primary) !important;
+    // NOTE: Removed "color: var(--custom-primary)" - text should stay dark gray
   }
+}
+
+// B5b: CRITICAL - Override any cached rules that set color on active view switches
+// This rule counters the cached ".o_control_panel .o_cp_switch_buttons .btn.active" rule
+.o_control_panel .o_cp_switch_buttons .btn.active,
+.o_control_panel .o_cp_switch_buttons .btn.btn-secondary.active,
+.o_cp_switch_buttons .btn.active {
+  color: #343a40 !important;  // Force dark gray text, same as Bootstrap's default
 }
 
 // B6: Smart Button Stat Values (Higher Specificity)
