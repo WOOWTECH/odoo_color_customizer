@@ -122,7 +122,7 @@ input.o_input:focus,
 .o_field_widget input:focus,
 .o_field_widget textarea:focus {{
     border-color: {primary_color} !important;
-    box-shadow: 0 0 0 0.2rem {light_color} !important;
+    box-shadow: none !important;
 }}
 
 /* ============================================================================

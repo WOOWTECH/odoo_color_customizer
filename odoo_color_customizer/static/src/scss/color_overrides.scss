@@ -170,7 +170,7 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 .form-control:focus,
 .form-select:focus {
   border-color: var(--custom-primary) !important;
-  box-shadow: 0 0 0 0.2rem var(--custom-primary-light) !important;
+  box-shadow: none !important;
 }
 
 // Checkboxes and radios
@@ -181,7 +181,7 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 
 .form-check-input:focus {
   border-color: var(--custom-primary) !important;
-  box-shadow: 0 0 0 0.2rem var(--custom-primary-light) !important;
+  box-shadow: none !important;
 }
 
 // =============================================================================
