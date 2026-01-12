@@ -152,13 +152,13 @@
 }
 
 // =============================================================================
-// Links
+// Links (Bug Fix 19: Add !important to override Odoo's base CSS)
 // =============================================================================
 a:not(.btn):not(.nav-link):not(.dropdown-item) {
-  color: var(--custom-primary);
+  color: var(--custom-primary) !important;
 
   &:hover {
-    color: var(--custom-primary-hover);
+    color: var(--custom-primary-hover) !important;
   }
 }
 
@@ -195,6 +195,19 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 
 .o_list_view .o_data_row:hover {
   background-color: var(--custom-primary-light) !important;
+}
+
+// =============================================================================
+// BUG FIX 22: Required field border in selected rows (quotation line items)
+// When adding a new line, the product field shows purple border instead of custom color
+// =============================================================================
+.o_data_row.o_selected_row > .o_data_cell.o_required_modifier:not(.o_readonly_modifier) {
+  border-bottom-color: var(--custom-primary) !important;
+}
+
+// Ensure all selected row borders use custom primary
+.o_data_row.o_selected_row > .o_data_cell {
+  --o-input-border-color: var(--custom-primary);
 }
 
 // =============================================================================
@@ -294,6 +307,16 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 
   .o_arrow_button.btn-primary.disabled {
     background-color: var(--custom-primary) !important;
+    border-color: var(--custom-primary) !important;
+  }
+
+  // BUG FIX 21: Current status button border (e.g., "Quotation")
+  .o_arrow_button_current {
+    border-color: var(--custom-primary) !important;
+  }
+
+  .o_arrow_button:hover,
+  .o_arrow_button:focus {
     border-color: var(--custom-primary) !important;
   }
 }
@@ -551,4 +574,27 @@ input.o_input:focus,
 textarea.o_input:focus {
   border-color: var(--custom-primary) !important;
   outline-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// BUG FIX 19: Combo Product Card Selection Border
+// When selecting a combo product option, the card border should use custom color
+// =============================================================================
+.product-card.selected {
+  border-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
+// BUG FIX 20: Product Configurator Color Picker and Pill Active States
+// Radio buttons and color pickers in variant/configurator dialogs
+// =============================================================================
+.o_sale_product_configurator_ptav_color.active {
+  border-color: var(--custom-primary) !important;
+}
+
+// Pill-style radio buttons in configurator
+.o_sale_product_configurator_ptav_pills.active label {
+  background-color: var(--custom-primary) !important;
+  border-color: var(--custom-primary) !important;
+  color: var(--custom-primary-text) !important;
 }

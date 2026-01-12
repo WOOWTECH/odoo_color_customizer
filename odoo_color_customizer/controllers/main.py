@@ -338,6 +338,52 @@ html body .o_action .o_form_view .o_notebook .nav-tabs .nav-item .nav-link.activ
     border-right-color: #dee2e6 !important;
     border-bottom-color: transparent !important;
 }}
+
+/* ============================================================================
+   BUG FIX 19-22: Additional purple color overrides
+   These rules provide maximum specificity to override compiled SCSS
+   ============================================================================ */
+
+/* BUG FIX 19: Combo product card selection border */
+.product-card.selected {{
+    border-color: {primary_color} !important;
+}}
+
+/* BUG FIX 20: Product configurator color picker active state */
+.o_sale_product_configurator_ptav_color.active {{
+    border-color: {primary_color} !important;
+}}
+
+/* BUG FIX 20b: Pill-style radio buttons in configurator */
+.o_sale_product_configurator_ptav_pills.active label {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+/* BUG FIX 21: Status bar current button */
+.o_statusbar_status .o_arrow_button_current {{
+    border-color: {primary_color} !important;
+}}
+
+.o_statusbar_status .o_arrow_button:hover,
+.o_statusbar_status .o_arrow_button:focus {{
+    border-color: {primary_color} !important;
+}}
+
+/* BUG FIX 22: Required field border in selected rows */
+.o_data_row.o_selected_row > .o_data_cell.o_required_modifier:not(.o_readonly_modifier) {{
+    border-bottom-color: {primary_color} !important;
+}}
+
+/* BUG FIX 19b: All links should use custom primary (with !important) */
+a:not(.btn):not(.nav-link):not(.dropdown-item) {{
+    color: {primary_color} !important;
+}}
+
+a:not(.btn):not(.nav-link):not(.dropdown-item):hover {{
+    color: {hover_color} !important;
+}}
 """
 
         return request.make_response(
