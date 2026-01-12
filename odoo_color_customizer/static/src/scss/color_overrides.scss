@@ -163,6 +163,91 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 }
 
 // =============================================================================
+// BUG FIX 28+32+33: Combo product links in quotation order lines (FORM VIEW CONTEXT)
+// Links inside form view embedded lists (one2many fields) need form view context
+// Previous fixes failed because they targeted standalone list views, not embedded lists
+// BUG FIX 33: Must explicitly target .o_form_uri class which Odoo uses for form links
+// Odoo core has: .o_form_view .o_form_uri { color: rgb(102, 89, 143) } - purple!
+// =============================================================================
+
+// CRITICAL: Override .o_form_uri which is the class on combo product links
+.o_form_view .o_form_uri,
+.o_form_view .o_form_uri:visited,
+.o_form_view .o_form_uri > span,
+.o_form_view .o_form_uri > span:first-child,
+.o_form_view .o_form_uri > span:first-child:visited {
+  color: var(--custom-primary) !important;
+}
+
+.o_form_view .o_form_uri:hover,
+.o_form_view .o_form_uri:focus,
+.o_form_view .o_form_uri.focus,
+.o_form_view .o_form_uri > span:first-child:hover,
+.o_form_view .o_form_uri > span:first-child:focus {
+  color: var(--custom-primary-hover) !important;
+}
+
+// Form view context - embedded one2many list links (CRITICAL for combo products)
+.o_form_view .o_field_one2many a,
+.o_form_view .o_field_one2many a:visited,
+.o_form_view .o_field_widget a,
+.o_form_view .o_field_widget a:visited,
+.o_form_view .o_list_renderer a,
+.o_form_view .o_list_renderer a:visited,
+.o_form_view .o_data_row a,
+.o_form_view .o_data_row a:visited,
+.o_form_view .o_data_cell a,
+.o_form_view .o_data_cell a:visited,
+.o_form_view .o_list_table a,
+.o_form_view .o_list_table a:visited {
+  color: var(--custom-primary) !important;
+}
+
+// Form view context - hover states
+.o_form_view .o_field_one2many a:hover,
+.o_form_view .o_field_widget a:hover,
+.o_form_view .o_list_renderer a:hover,
+.o_form_view .o_data_row a:hover,
+.o_form_view .o_data_cell a:hover,
+.o_form_view .o_list_table a:hover,
+.o_form_view .o_field_one2many a:visited:hover,
+.o_form_view .o_field_widget a:visited:hover,
+.o_form_view .o_list_renderer a:visited:hover,
+.o_form_view .o_data_row a:visited:hover,
+.o_form_view .o_data_cell a:visited:hover,
+.o_form_view .o_list_table a:visited:hover {
+  color: var(--custom-primary-hover) !important;
+}
+
+// Standalone list view context (for regular list views outside forms)
+.o_list_renderer .o_data_row a,
+.o_list_renderer .o_data_row a:visited,
+.o_list_view .o_data_row a,
+.o_list_view .o_data_row a:visited,
+.o_data_row a,
+.o_data_row a:visited,
+.o_data_cell a,
+.o_data_cell a:visited,
+.o_list_table a,
+.o_list_table a:visited {
+  color: var(--custom-primary) !important;
+}
+
+// Standalone list view context - hover states
+.o_list_renderer .o_data_row a:hover,
+.o_list_view .o_data_row a:hover,
+.o_data_row a:hover,
+.o_data_cell a:hover,
+.o_list_table a:hover,
+.o_list_renderer .o_data_row a:visited:hover,
+.o_list_view .o_data_row a:visited:hover,
+.o_data_row a:visited:hover,
+.o_data_cell a:visited:hover,
+.o_list_table a:visited:hover {
+  color: var(--custom-primary-hover) !important;
+}
+
+// =============================================================================
 // Form Elements
 // =============================================================================
 
@@ -241,6 +326,27 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 }
 
 // =============================================================================
+// BUG FIX 27: Variant price extra badges (e.g., +$111.00)
+// These use .badge.rounded-pill.border - Odoo adds box-shadow/outline causing DOUBLE BORDER
+// =============================================================================
+.badge.rounded-pill.border,
+.badge.border {
+  border-color: var(--custom-primary) !important;
+  box-shadow: none !important;           // Remove shadow causing double border
+  outline: none !important;              // Remove outline
+  outline-color: transparent !important; // Explicit clear
+}
+
+// Badge inside variant pills - override Odoo's website_sale/product_configurator.scss
+.o_variant_pills_input_value .badge,
+.radio_input_value .badge,
+label .badge.rounded-pill.border {
+  border-color: var(--custom-primary) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+// =============================================================================
 // Calendar
 // =============================================================================
 .fc-event,
@@ -300,6 +406,10 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
 
 // Status bar
 .o_statusbar_status {
+  // BUG FIX 29: Override CSS variables that SCSS uses for borders
+  --o-statusbar-border: var(--custom-primary);
+  --o-statusbar-border-active: var(--custom-primary);
+
   button.btn-primary {
     background-color: var(--custom-primary) !important;
     border-color: var(--custom-primary) !important;
@@ -310,14 +420,37 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {
     border-color: var(--custom-primary) !important;
   }
 
-  // BUG FIX 21: Current status button border (e.g., "Quotation")
-  .o_arrow_button_current {
+  // BUG FIX 29: Target ::before pseudo-element that creates the ACTUAL border
+  .o_arrow_button::before {
     border-color: var(--custom-primary) !important;
   }
 
-  .o_arrow_button:hover,
-  .o_arrow_button:focus {
+  .o_arrow_button_current::before {
     border-color: var(--custom-primary) !important;
+    background-color: var(--custom-primary-light) !important;
+  }
+
+  // BUG FIX 21 & 26 & 29 (Enhanced): Current status button border (e.g., "Quotation")
+  // Keep direct selectors as fallback
+  .o_arrow_button_current,
+  button.o_arrow_button_current,
+  .btn.o_arrow_button_current {
+    border-color: var(--custom-primary) !important;
+  }
+
+  // All arrow buttons hover/focus
+  .o_arrow_button:hover,
+  .o_arrow_button:focus,
+  button.o_arrow_button:hover,
+  button.o_arrow_button:focus {
+    border-color: var(--custom-primary) !important;
+  }
+
+  // All buttons in status bar with o_arrow_button class
+  button[class*="o_arrow_button"] {
+    &.o_arrow_button_current {
+      border-color: var(--custom-primary) !important;
+    }
   }
 }
 
@@ -585,6 +718,14 @@ textarea.o_input:focus {
 }
 
 // =============================================================================
+// BUG FIX 23: Combo Product Card Hover Border
+// When hovering over combo product cards, border should use custom color
+// =============================================================================
+.product-card:hover {
+  border-color: var(--custom-primary) !important;
+}
+
+// =============================================================================
 // BUG FIX 20: Product Configurator Color Picker and Pill Active States
 // Radio buttons and color pickers in variant/configurator dialogs
 // =============================================================================
@@ -597,4 +738,45 @@ textarea.o_input:focus {
   background-color: var(--custom-primary) !important;
   border-color: var(--custom-primary) !important;
   color: var(--custom-primary-text) !important;
+}
+
+// =============================================================================
+// BUG FIX 30: Discuss Sidebar Active/Hover States
+// Mail module uses hardcoded $o-action color for active/hover backgrounds
+// =============================================================================
+
+// Override CSS variables for Discuss sidebar
+.o-mail-DiscussSidebar {
+  --mail-DiscussSidebar-itemActiveBgColor: var(--custom-primary-light);
+  --mail-DiscussSidebar-itemActiveOutlineColor: var(--custom-primary);
+}
+
+// Active sidebar item (Inbox, Starred, History, Channels, DMs)
+.o-mail-DiscussSidebar-item.o-active,
+.o-mail-DiscussSidebarChannel.o-active {
+  background-color: var(--custom-primary-light) !important;
+  outline-color: var(--custom-primary) !important;
+}
+
+// Hover state for sidebar items
+.o-mail-DiscussSidebar-item:hover,
+.o-mail-DiscussSidebarChannel:hover {
+  background-color: var(--custom-primary-light) !important;
+  outline-color: var(--custom-primary) !important;
+}
+
+// Quick search button active state
+.o-mail-DiscussSidebarCategories-quickSearchBtn.o-active {
+  background-color: var(--custom-primary) !important;
+  color: var(--custom-primary-text) !important;
+}
+
+// Quick search input focus
+.o-mail-DiscussSidebarQuickSearchInput.o-active {
+  outline-color: var(--custom-primary) !important;
+}
+
+// Category headers with icons
+.o-mail-DiscussSidebarCategory-toggler:hover {
+  color: var(--custom-primary) !important;
 }

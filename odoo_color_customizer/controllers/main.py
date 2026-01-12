@@ -349,6 +349,11 @@ html body .o_action .o_form_view .o_notebook .nav-tabs .nav-item .nav-link.activ
     border-color: {primary_color} !important;
 }}
 
+/* BUG FIX 23: Combo product card hover border */
+.product-card:hover {{
+    border-color: {primary_color} !important;
+}}
+
 /* BUG FIX 20: Product configurator color picker active state */
 .o_sale_product_configurator_ptav_color.active {{
     border-color: {primary_color} !important;
@@ -383,6 +388,181 @@ a:not(.btn):not(.nav-link):not(.dropdown-item) {{
 
 a:not(.btn):not(.nav-link):not(.dropdown-item):hover {{
     color: {hover_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 27: Variant price extra badges (e.g., +$111.00)
+   Remove box-shadow/outline causing DOUBLE BORDER effect
+   ============================================================================ */
+.badge.rounded-pill.border,
+.badge.border {{
+    border-color: {primary_color} !important;
+    box-shadow: none !important;
+    outline: none !important;
+    outline-color: transparent !important;
+}}
+
+.o_variant_pills_input_value .badge,
+.radio_input_value .badge,
+label .badge.rounded-pill.border {{
+    border-color: {primary_color} !important;
+    box-shadow: none !important;
+    outline: none !important;
+}}
+
+/* ============================================================================
+   BUG FIX 28+32+33: Combo product links in form view embedded lists
+   Links inside one2many fields require form view context selectors
+   Previous fixes failed because they targeted standalone list views
+   BUG FIX 33: Must explicitly target .o_form_uri class which Odoo uses for form links
+   Odoo core has: .o_form_view .o_form_uri {{ color: rgb(102, 89, 143) }} - purple!
+   ============================================================================ */
+
+/* CRITICAL: Override .o_form_uri which is the class on combo product links */
+.o_form_view .o_form_uri,
+.o_form_view .o_form_uri:visited,
+.o_form_view .o_form_uri > span,
+.o_form_view .o_form_uri > span:first-child,
+.o_form_view .o_form_uri > span:first-child:visited {{
+    color: {primary_color} !important;
+}}
+
+.o_form_view .o_form_uri:hover,
+.o_form_view .o_form_uri:focus,
+.o_form_view .o_form_uri.focus,
+.o_form_view .o_form_uri > span:first-child:hover,
+.o_form_view .o_form_uri > span:first-child:focus {{
+    color: {hover_color} !important;
+}}
+
+/* Form view context - embedded one2many list links (CRITICAL for combo products) */
+.o_form_view .o_field_one2many a,
+.o_form_view .o_field_one2many a:visited,
+.o_form_view .o_field_widget a,
+.o_form_view .o_field_widget a:visited,
+.o_form_view .o_list_renderer a,
+.o_form_view .o_list_renderer a:visited,
+.o_form_view .o_data_row a,
+.o_form_view .o_data_row a:visited,
+.o_form_view .o_data_cell a,
+.o_form_view .o_data_cell a:visited,
+.o_form_view .o_list_table a,
+.o_form_view .o_list_table a:visited {{
+    color: {primary_color} !important;
+}}
+
+/* Form view context - hover states */
+.o_form_view .o_field_one2many a:hover,
+.o_form_view .o_field_widget a:hover,
+.o_form_view .o_list_renderer a:hover,
+.o_form_view .o_data_row a:hover,
+.o_form_view .o_data_cell a:hover,
+.o_form_view .o_list_table a:hover,
+.o_form_view .o_field_one2many a:visited:hover,
+.o_form_view .o_field_widget a:visited:hover,
+.o_form_view .o_list_renderer a:visited:hover,
+.o_form_view .o_data_row a:visited:hover,
+.o_form_view .o_data_cell a:visited:hover,
+.o_form_view .o_list_table a:visited:hover {{
+    color: {hover_color} !important;
+}}
+
+/* Standalone list view context (for regular list views outside forms) */
+.o_list_renderer .o_data_row a,
+.o_list_renderer .o_data_row a:visited,
+.o_list_view .o_data_row a,
+.o_list_view .o_data_row a:visited,
+.o_data_row a,
+.o_data_row a:visited,
+.o_data_cell a,
+.o_data_cell a:visited,
+.o_list_table a,
+.o_list_table a:visited {{
+    color: {primary_color} !important;
+}}
+
+/* Standalone list view - hover states */
+.o_list_renderer .o_data_row a:hover,
+.o_list_view .o_data_row a:hover,
+.o_data_row a:hover,
+.o_data_cell a:hover,
+.o_list_table a:hover,
+.o_list_renderer .o_data_row a:visited:hover,
+.o_list_view .o_data_row a:visited:hover,
+.o_data_row a:visited:hover,
+.o_data_cell a:visited:hover,
+.o_list_table a:visited:hover {{
+    color: {hover_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 29: Status bar button borders - override CSS variables + ::before
+   ============================================================================ */
+.o_statusbar_status {{
+    --o-statusbar-border: {primary_color};
+    --o-statusbar-border-active: {primary_color};
+}}
+
+.o_statusbar_status .o_arrow_button::before {{
+    border-color: {primary_color} !important;
+}}
+
+.o_statusbar_status .o_arrow_button_current::before {{
+    border-color: {primary_color} !important;
+    background-color: {light_color} !important;
+}}
+
+.o_statusbar_status .o_arrow_button_current,
+.o_statusbar_status button.o_arrow_button_current,
+.o_statusbar_status .btn.o_arrow_button_current {{
+    border-color: {primary_color} !important;
+}}
+
+.o_statusbar_status .o_arrow_button:hover,
+.o_statusbar_status .o_arrow_button:focus,
+.o_statusbar_status button.o_arrow_button:hover,
+.o_statusbar_status button.o_arrow_button:focus {{
+    border-color: {primary_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 30: Discuss Sidebar Active/Hover States
+   ============================================================================ */
+
+/* Override CSS variables for Discuss sidebar */
+.o-mail-DiscussSidebar {{
+    --mail-DiscussSidebar-itemActiveBgColor: {light_color};
+    --mail-DiscussSidebar-itemActiveOutlineColor: {primary_color};
+}}
+
+/* Active sidebar items */
+.o-mail-DiscussSidebar-item.o-active,
+.o-mail-DiscussSidebarChannel.o-active {{
+    background-color: {light_color} !important;
+    outline-color: {primary_color} !important;
+}}
+
+/* Hover state for sidebar items */
+.o-mail-DiscussSidebar-item:hover,
+.o-mail-DiscussSidebarChannel:hover {{
+    background-color: {light_color} !important;
+    outline-color: {primary_color} !important;
+}}
+
+/* Quick search button active state */
+.o-mail-DiscussSidebarCategories-quickSearchBtn.o-active {{
+    background-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+/* Quick search input focus */
+.o-mail-DiscussSidebarQuickSearchInput.o-active {{
+    outline-color: {primary_color} !important;
+}}
+
+/* Category headers with icons */
+.o-mail-DiscussSidebarCategory-toggler:hover {{
+    color: {primary_color} !important;
 }}
 """
 
