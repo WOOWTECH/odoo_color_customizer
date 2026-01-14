@@ -13,6 +13,56 @@ DEFAULT_PRIMARY_COLOR = '#71639e'
 class ColorCustomizerController(http.Controller):
     """Controller for serving dynamic theme CSS."""
 
+    @http.route('/color_customizer/frontend.css', type='http', auth='public', cors='*')
+    def get_frontend_css(self):
+        """
+        Return minimal CSS for frontend - ONLY the editor launcher fix (BUG FIX 34).
+        Other frontend elements remain unchanged.
+        """
+        # Get configured color or fall back to default
+        primary_color = request.env['ir.config_parameter'].sudo().get_param(
+            'odoo_color_customizer.primary_color',
+            DEFAULT_PRIMARY_COLOR
+        )
+
+        # Validate color format
+        if not primary_color or not self._is_valid_hex_color(primary_color):
+            primary_color = DEFAULT_PRIMARY_COLOR
+
+        # Calculate hover color
+        hover_color = self._darken_color(primary_color, 0.1)
+
+        # Generate minimal CSS - ONLY BUG FIX 34
+        css = f""":root {{
+    --custom-primary: {primary_color};
+    --custom-primary-hover: {hover_color};
+}}
+
+/* BUG FIX 34: Frontend Editor Launcher (Triangle + Apps Button) */
+.o_frontend_to_backend_nav::before {{
+    border-top-color: {primary_color} !important;
+    border-left-color: {primary_color} !important;
+}}
+
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn {{
+    background-color: {primary_color} !important;
+}}
+
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn:hover {{
+    background-color: {hover_color} !important;
+}}
+"""
+
+        return request.make_response(
+            css,
+            headers=[
+                ('Content-Type', 'text/css; charset=utf-8'),
+                ('Cache-Control', 'no-cache, no-store, must-revalidate'),
+                ('Pragma', 'no-cache'),
+                ('Expires', '0'),
+            ]
+        )
+
     @http.route('/color_customizer/theme.css', type='http', auth='public', cors='*')
     def get_theme_css(self):
         """
@@ -564,13 +614,33 @@ label .badge.rounded-pill.border {{
 .o-mail-DiscussSidebarCategory-toggler:hover {{
     color: {primary_color} !important;
 }}
+
+/* ============================================================================
+   BUG FIX 34: Frontend Editor Launcher (Triangle + Apps Button)
+   The triangle and square launcher on website frontend uses $o-enterprise-color
+   Source: website/static/src/scss/website.ui.scss lines 14-57
+   ============================================================================ */
+.o_frontend_to_backend_nav::before {{
+    border-top-color: {primary_color} !important;
+    border-left-color: {primary_color} !important;
+}}
+
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn {{
+    background-color: {primary_color} !important;
+}}
+
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn:hover {{
+    background-color: {hover_color} !important;
+}}
 """
 
         return request.make_response(
             css,
             headers=[
                 ('Content-Type', 'text/css; charset=utf-8'),
-                ('Cache-Control', 'public, max-age=3600'),
+                ('Cache-Control', 'no-cache, no-store, must-revalidate'),
+                ('Pragma', 'no-cache'),
+                ('Expires', '0'),
             ]
         )
 

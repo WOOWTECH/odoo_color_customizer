@@ -780,3 +780,25 @@ textarea.o_input:focus {
 .o-mail-DiscussSidebarCategory-toggler:hover {
   color: var(--custom-primary) !important;
 }
+
+// =============================================================================
+// BUG FIX 34: Frontend Editor Launcher (Triangle + Apps Button)
+// The triangle and square launcher on website frontend uses $o-enterprise-color
+// Source: website/static/src/scss/website.ui.scss lines 14-57
+// =============================================================================
+.o_frontend_to_backend_nav {
+  // Override the triangle (::before pseudo-element)
+  &::before {
+    border-top-color: var(--custom-primary) !important;
+    border-left-color: var(--custom-primary) !important;
+  }
+
+  // Override the apps button background (the square with 9-dot icon)
+  .o_frontend_to_backend_apps_btn {
+    background-color: var(--custom-primary) !important;
+
+    &:hover {
+      background-color: var(--custom-primary-hover) !important;
+    }
+  }
+}

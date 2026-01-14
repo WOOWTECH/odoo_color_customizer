@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Color Customizer',
-    'version': '18.0.1.1.0',
+    'version': '18.0.1.2.0',
     'category': 'Customizations',
     'summary': 'Customize Odoo primary brand color',
     'description': """
@@ -18,16 +18,18 @@ Features:
     """,
     'author': 'Odoo Color Customizer',
     'website': '',
-    'depends': ['base_setup', 'web'],
+    'depends': ['base_setup', 'web', 'website'],
     'data': [
         'security/ir.model.access.csv',
         'views/res_config_settings_views.xml',
+        'views/website_templates.xml',
     ],
     'assets': {
         'web.assets_backend': [
             'odoo_color_customizer/static/src/scss/color_overrides.scss',
             'odoo_color_customizer/static/src/js/color_customizer.js',
         ],
+        # Frontend CSS is loaded via website_templates.xml (BUG FIX 34 only)
     },
     'installable': True,
     'application': False,
