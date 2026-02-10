@@ -176,6 +176,85 @@ footer a:not(.btn) {{
 footer a:not(.btn):hover {{
     color: {hover_color};
 }}
+
+/* ============================================================================
+   BUG FIX 38: Login Page Links
+   Replace purple links on /web/login page
+   ============================================================================ */
+
+/* Login form links */
+.oe_login_form a,
+.oe_login_form a:visited,
+form.oe_login_form a:not(.btn),
+a.oe_login_link,
+.oe_reset_password_link,
+.oe_signup_link {{
+    color: {primary_color} !important;
+}}
+
+.oe_login_form a:hover,
+a.oe_login_link:hover,
+.oe_reset_password_link:hover,
+.oe_signup_link:hover {{
+    color: {hover_color} !important;
+}}
+
+/* Select user dropdown link */
+.oe_login_form .oe_login_link,
+.oe_login_form [href*="select_user"] {{
+    color: {primary_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 39: Portal Page Elements
+   Replace purple on /my/home and other portal pages
+   ============================================================================ */
+
+/* Portal stat card - light background (the "待審閱報價" card) */
+.o_portal_my_home .card.bg-100,
+.o_portal_my_home .o_portal_doc_spinner,
+.o_portal_my_home .o_portal_docs .card,
+.o_portal_my_count .card,
+.o_portal_index_card {{
+    background-color: {light_color} !important;
+}}
+
+/* Portal card icons (發票, 工具, 借用, 設備, 維修請求) */
+.o_portal_my_home .card-body i,
+.o_portal_my_home .card-body .fa,
+.o_portal_my_home .card-body .oi,
+.o_portal_my_home .o_portal_doc_spinner i,
+.o_portal_index_card i,
+.o_portal_index_card .fa,
+.o_portal_index_card .oi {{
+    color: {primary_color} !important;
+}}
+
+/* Portal card link titles */
+.o_portal_my_home .card-body a,
+.o_portal_my_home .card-body a:visited,
+.o_portal_index_card a,
+.o_portal_index_card a:visited {{
+    color: {primary_color} !important;
+}}
+
+.o_portal_my_home .card-body a:hover,
+.o_portal_index_card a:hover {{
+    color: {hover_color} !important;
+}}
+
+/* Portal stat number (the "1" in "1 待審閱報價") */
+.o_portal_my_home .o_portal_count,
+.o_portal_my_count .o_portal_count {{
+    color: {primary_color} !important;
+}}
+
+/* Portal sidebar active link */
+.o_portal_my_home .o_portal_sidebar .active,
+.o_portal_my_details a.active {{
+    color: {primary_color} !important;
+    border-color: {primary_color} !important;
+}}
 """
 
         return request.make_response(
@@ -278,53 +357,11 @@ footer a:not(.btn):hover {{
 }}
 
 /* ============================================================================
-   BUG FIX 35: Navbar text and icons - ensure white color for visibility
+   NOTE: Navbar TEXT colors are intentionally NOT overridden.
+   Odoo's default navbar styling handles text contrast automatically.
+   We only override BACKGROUND colors here, not text colors.
+   Black text should remain black - only purple elements are changed.
    ============================================================================ */
-
-/* All Apps button - use dynamic contrast color for text and icon */
-.o_main_navbar .o_navbar_apps_menu .dropdown-toggle,
-.o_main_navbar .o_navbar_apps_menu button {{
-    color: {text_color} !important;
-}}
-
-.o_main_navbar .o_navbar_apps_menu .dropdown-toggle .oi,
-.o_main_navbar .o_navbar_apps_menu .dropdown-toggle .oi-apps,
-.o_main_navbar .o_navbar_apps_menu .dropdown-toggle i,
-.o_main_navbar .o_navbar_apps_menu .dropdown-toggle span {{
-    color: {text_color} !important;
-}}
-
-/* All navbar items should use dynamic contrast color */
-.o_main_navbar .o_menu_brand,
-.o_main_navbar .o_nav_entry,
-.o_main_navbar .dropdown-toggle,
-.o_main_navbar button:not(.btn-primary):not(.btn-secondary),
-.o_main_navbar a:not(.dropdown-item) {{
-    color: {text_color} !important;
-}}
-
-/* Navbar icons */
-.o_main_navbar .oi,
-.o_main_navbar .fa,
-.o_main_navbar i:not(.o_button_icon):not(.text-danger):not(.text-success):not(.text-warning) {{
-    color: {text_color} !important;
-}}
-
-/* Systray items (messages, activities, user menu) */
-.o_main_navbar .o_menu_systray .dropdown-toggle,
-.o_main_navbar .o_menu_systray button,
-.o_main_navbar .o_menu_systray a,
-.o_main_navbar .o_menu_systray .oi,
-.o_main_navbar .o_menu_systray .fa,
-.o_main_navbar .o_menu_systray i {{
-    color: {text_color} !important;
-}}
-
-/* Counter badges in systray - inverse colors for contrast */
-.o_main_navbar .o_menu_systray .badge {{
-    background-color: {text_color} !important;
-    color: {primary_color} !important;
-}}
 
 /* ============================================================================
    BUG FIX 1: Email badge/tag outline color
