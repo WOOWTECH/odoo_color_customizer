@@ -92,6 +92,43 @@ class ColorCustomizerController(http.Controller):
 }}
 
 /* ============================================================================
+   BUG FIX 42: Mobile Hamburger Menu Icon (三條線)
+   The .navbar-toggler-icon uses CSS background-image (SVG) not color property
+   We need to override the SVG with a white version
+   ============================================================================ */
+
+/* Mobile navbar hamburger button - make icon white */
+.o_header_mobile .navbar-toggler-icon,
+.navbar-toggler-icon {{
+    /* Override Bootstrap's default SVG with white-colored SVG */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}}
+
+/* Mobile navbar background - use primary color */
+.o_header_mobile,
+.o_header_mobile .navbar,
+header .navbar.o_header_mobile,
+nav.o_header_mobile {{
+    background-color: {primary_color} !important;
+}}
+
+/* Mobile navbar text should be white */
+.o_header_mobile .nav-link,
+.o_header_mobile .navbar-brand,
+.o_header_mobile a {{
+    color: #ffffff !important;
+}}
+
+/* Mobile offcanvas menu header */
+.o_navbar_mobile .offcanvas-header {{
+    background-color: {primary_color} !important;
+}}
+
+.o_navbar_mobile .offcanvas-header .btn-close {{
+    filter: invert(1) !important;
+}}
+
+/* ============================================================================
    BUG FIX 35: Portal Page Styling
    ============================================================================ */
 
