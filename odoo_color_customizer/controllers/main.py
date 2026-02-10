@@ -129,6 +129,72 @@ nav.o_header_mobile {{
 }}
 
 /* ============================================================================
+   BUG FIX 43: Mobile Sidebar "所有應用程式" Button
+   The .o_sidebar_topbar contains "所有應用程式" button with cyan background
+   Both icon (oi-apps) and text (span.px-2) must be WHITE for contrast
+   ============================================================================ */
+
+/* The "所有應用程式" button in mobile sidebar header */
+.o_sidebar_topbar a.btn.btn-primary,
+.o_sidebar_topbar .btn-primary,
+.o_sidebar_topbar a.btn-primary {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+    color: #ffffff !important;
+}}
+
+/* Ensure the icon inside the button is white */
+.o_sidebar_topbar a.btn.btn-primary .oi,
+.o_sidebar_topbar a.btn.btn-primary .oi-apps,
+.o_sidebar_topbar a.btn.btn-primary i,
+.o_sidebar_topbar .btn-primary .oi,
+.o_sidebar_topbar .btn-primary .oi-apps,
+.o_sidebar_topbar .btn-primary i {{
+    color: #ffffff !important;
+}}
+
+/* Ensure the text inside the button is white - 所有應用程式 */
+.o_sidebar_topbar a.btn.btn-primary span,
+.o_sidebar_topbar a.btn.btn-primary span.px-2,
+.o_sidebar_topbar .btn-primary span {{
+    color: #ffffff !important;
+}}
+
+/* ============================================================================
+   BUG FIX 44: Mobile Hamburger Icon (三條線) in Backend Navbar
+   The .o_menu_toggle contains fa-bars icon - must be WHITE on cyan navbar
+   Currently showing as cyan (same as background) - invisible!
+   ============================================================================ */
+
+/* Mobile menu toggle hamburger icon */
+.o_menu_toggle,
+.o_menu_toggle i,
+.o_menu_toggle .fa,
+.o_menu_toggle .fa-bars,
+a.o_menu_toggle,
+a.o_menu_toggle i,
+a.o_menu_toggle .fa-bars {{
+    color: #ffffff !important;
+}}
+
+/* The ::before pseudo-element for FontAwesome icons */
+.o_menu_toggle .fa::before,
+.o_menu_toggle .fa-bars::before,
+a.o_menu_toggle .fa::before,
+a.o_menu_toggle .fa-bars::before {{
+    color: #ffffff !important;
+}}
+
+/* Also ensure mobile navbar has proper colors */
+.o_main_navbar .o_menu_toggle,
+.o_main_navbar .o_menu_toggle i,
+.o_main_navbar .o_menu_toggle .fa-bars,
+.o_main_navbar a.o_menu_toggle,
+.o_main_navbar a.o_menu_toggle i {{
+    color: #ffffff !important;
+}}
+
+/* ============================================================================
    BUG FIX 35: Portal Page Styling
    ============================================================================ */
 
