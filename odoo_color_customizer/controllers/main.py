@@ -66,25 +66,29 @@ class ColorCustomizerController(http.Controller):
     color: #ffffff !important;
 }}
 
-/* BUG FIX 40: "所有應用程式" button text and hamburger icon - ALWAYS WHITE */
-.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn span,
-.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn .fa,
-.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn .oi,
-.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn .oi-apps,
-.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn i,
-.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn i::before {{
+/* BUG FIX 40: "所有應用程式" button - the icon is fa-th (FontAwesome grid icon) */
+/* The button itself has class "fa fa-th" - it IS the icon, not a container */
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn.fa,
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn.fa-th,
+.o_frontend_to_backend_nav a.o_frontend_to_backend_apps_btn {{
     color: #ffffff !important;
 }}
 
-/* BUG FIX 41: Hamburger menu icon (oi-apps) must be visible and WHITE */
-.o_frontend_to_backend_nav .oi-apps,
-.o_frontend_to_backend_nav .oi-apps::before,
-.o_frontend_to_backend_apps_btn .oi-apps,
-.o_frontend_to_backend_apps_btn .oi-apps::before {{
+/* The ::before pseudo-element contains the actual icon glyph */
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn.fa::before,
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn.fa-th::before,
+.o_frontend_to_backend_nav a.o_frontend_to_backend_apps_btn::before {{
+    color: #ffffff !important;
+}}
+
+/* BUG FIX 41: Ensure the grid icon (fa-th) is visible */
+.o_frontend_to_backend_nav .fa-th,
+.o_frontend_to_backend_nav .fa-th::before,
+.o_frontend_to_backend_apps_btn.fa-th,
+.o_frontend_to_backend_apps_btn.fa-th::before {{
     color: #ffffff !important;
     opacity: 1 !important;
     visibility: visible !important;
-    display: inline-block !important;
 }}
 
 /* ============================================================================
