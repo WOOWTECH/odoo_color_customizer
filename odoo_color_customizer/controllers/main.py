@@ -48,6 +48,8 @@ class ColorCustomizerController(http.Controller):
 
 /* ============================================================================
    BUG FIX 34: Frontend Editor Launcher (Triangle + Apps Button)
+   IMPORTANT: Text/icons are ALWAYS WHITE (#ffffff) per user requirement
+   Do NOT use {{text_color}} here - user explicitly wants white
    ============================================================================ */
 .o_frontend_to_backend_nav::before {{
     border-top-color: {primary_color} !important;
@@ -56,32 +58,33 @@ class ColorCustomizerController(http.Controller):
 
 .o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn {{
     background-color: {primary_color} !important;
-    color: {text_color} !important;
+    color: #ffffff !important;
 }}
 
 .o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn:hover {{
     background-color: {hover_color} !important;
-    color: {text_color} !important;
+    color: #ffffff !important;
 }}
 
-/* BUG FIX 40: "所有應用程式" button text and hamburger icon must be white */
+/* BUG FIX 40: "所有應用程式" button text and hamburger icon - ALWAYS WHITE */
 .o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn span,
 .o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn .fa,
 .o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn .oi,
 .o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn .oi-apps,
 .o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn i,
 .o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn i::before {{
-    color: {text_color} !important;
+    color: #ffffff !important;
 }}
 
-/* BUG FIX 41: Hamburger menu icon (oi-apps) must be visible */
+/* BUG FIX 41: Hamburger menu icon (oi-apps) must be visible and WHITE */
 .o_frontend_to_backend_nav .oi-apps,
 .o_frontend_to_backend_nav .oi-apps::before,
 .o_frontend_to_backend_apps_btn .oi-apps,
 .o_frontend_to_backend_apps_btn .oi-apps::before {{
-    color: {text_color} !important;
+    color: #ffffff !important;
     opacity: 1 !important;
     visibility: visible !important;
+    display: inline-block !important;
 }}
 
 /* ============================================================================
