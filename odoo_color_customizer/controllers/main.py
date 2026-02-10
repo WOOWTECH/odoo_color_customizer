@@ -56,10 +56,20 @@ class ColorCustomizerController(http.Controller):
 
 .o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn {{
     background-color: {primary_color} !important;
+    color: {text_color} !important;
 }}
 
 .o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn:hover {{
     background-color: {hover_color} !important;
+    color: {text_color} !important;
+}}
+
+/* BUG FIX 40: "所有應用程式" button text must be white on dark background */
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn span,
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn .fa,
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn .oi,
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn i {{
+    color: {text_color} !important;
 }}
 
 /* ============================================================================
