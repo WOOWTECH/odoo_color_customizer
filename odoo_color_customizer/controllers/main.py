@@ -96,12 +96,15 @@ class ColorCustomizerController(http.Controller):
     color: {text_color} !important;
 }}
 
-/* Links */
-a:not(.btn):not(.nav-link):not(.dropdown-item) {{
+/* Links - ONLY target links that were originally purple */
+/* NOTE: Do NOT use broad selectors like a:not(.btn) - this changes ALL links */
+/* Only specific purple links should be changed */
+.text-primary a,
+a.text-primary {{
     color: {primary_color};
 }}
 
-a:not(.btn):not(.nav-link):not(.dropdown-item):hover {{
+a.text-primary:hover {{
     color: {hover_color};
 }}
 
@@ -230,17 +233,33 @@ a.oe_login_link:hover,
     color: {primary_color} !important;
 }}
 
-/* Portal card link titles */
-.o_portal_my_home .card-body a,
-.o_portal_my_home .card-body a:visited,
-.o_portal_index_card a,
-.o_portal_index_card a:visited {{
+/* Portal card link titles - ONLY the main h5/title link, NOT description text */
+/* Be VERY specific to only target the main card title links */
+.o_portal_my_home .card-title a,
+.o_portal_my_home .card-body h5 a,
+.o_portal_my_home .card-body .h5 a,
+.o_portal_my_home .card-body > h5 > a {{
     color: {primary_color} !important;
 }}
 
-.o_portal_my_home .card-body a:hover,
-.o_portal_index_card a:hover {{
+.o_portal_my_home .card-title a:hover,
+.o_portal_my_home .card-body h5 a:hover,
+.o_portal_my_home .card-body .h5 a:hover,
+.o_portal_my_home .card-body > h5 > a:hover {{
     color: {hover_color} !important;
+}}
+
+/* CRITICAL: Ensure ALL description text stays gray/default - DO NOT color these */
+/* This includes paragraphs, small text, and any text that is NOT the main title */
+.o_portal_my_home .card-body p,
+.o_portal_my_home .card-body p a,
+.o_portal_my_home .card-body small,
+.o_portal_my_home .card-body small a,
+.o_portal_my_home .card-body .text-muted,
+.o_portal_my_home .card-body .text-muted a,
+.o_portal_my_home .card-body span:not(.badge),
+.o_portal_my_home .card-body div:not(.card-title) a:not(:first-child) {{
+    color: #6c757d !important;
 }}
 
 /* Portal stat number (the "1" in "1 待審閱報價") */
