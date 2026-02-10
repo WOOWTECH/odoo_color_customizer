@@ -29,7 +29,7 @@ Features:
             'odoo_color_customizer/static/src/scss/color_overrides.scss',
             'odoo_color_customizer/static/src/js/color_customizer.js',
         ],
-        # Frontend CSS is loaded via website_templates.xml (BUG FIX 34 only)
+        # Frontend CSS is loaded via web_templates.xml (inherits web.frontend_layout)
     },
     'installable': True,
     'application': False,
