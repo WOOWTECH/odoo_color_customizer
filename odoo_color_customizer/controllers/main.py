@@ -16,8 +16,10 @@ class ColorCustomizerController(http.Controller):
     @http.route('/color_customizer/frontend.css', type='http', auth='public', cors='*')
     def get_frontend_css(self):
         """
-        Return minimal CSS for frontend - ONLY the editor launcher fix (BUG FIX 34).
-        Other frontend elements remain unchanged.
+        Return CSS for frontend pages including:
+        - BUG FIX 34: Editor launcher (triangle + apps button)
+        - BUG FIX 35: Portal page styling
+        - BUG FIX 36: Website frontend elements
         """
         # Get configured color or fall back to default
         primary_color = request.env['ir.config_parameter'].sudo().get_param(
@@ -29,16 +31,24 @@ class ColorCustomizerController(http.Controller):
         if not primary_color or not self._is_valid_hex_color(primary_color):
             primary_color = DEFAULT_PRIMARY_COLOR
 
-        # Calculate hover color
+        # Calculate color variants
         hover_color = self._darken_color(primary_color, 0.1)
+        active_color = self._darken_color(primary_color, 0.2)
+        light_color = self._lighten_color(primary_color, 0.85)
+        text_color = self._get_contrast_color(primary_color)
 
-        # Generate minimal CSS - ONLY BUG FIX 34
+        # Generate comprehensive frontend CSS
         css = f""":root {{
     --custom-primary: {primary_color};
     --custom-primary-hover: {hover_color};
+    --custom-primary-active: {active_color};
+    --custom-primary-light: {light_color};
+    --custom-primary-text: {text_color};
 }}
 
-/* BUG FIX 34: Frontend Editor Launcher (Triangle + Apps Button) */
+/* ============================================================================
+   BUG FIX 34: Frontend Editor Launcher (Triangle + Apps Button)
+   ============================================================================ */
 .o_frontend_to_backend_nav::before {{
     border-top-color: {primary_color} !important;
     border-left-color: {primary_color} !important;
@@ -50,6 +60,121 @@ class ColorCustomizerController(http.Controller):
 
 .o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn:hover {{
     background-color: {hover_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 35: Portal Page Styling
+   ============================================================================ */
+
+/* Primary buttons */
+.btn-primary {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+.btn-primary:hover,
+.btn-primary:focus {{
+    background-color: {hover_color} !important;
+    border-color: {hover_color} !important;
+}}
+
+.btn-primary:active {{
+    background-color: {active_color} !important;
+    border-color: {active_color} !important;
+}}
+
+/* Outline buttons */
+.btn-outline-primary {{
+    color: {primary_color} !important;
+    border-color: {primary_color} !important;
+}}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {{
+    background-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+/* Links */
+a:not(.btn):not(.nav-link):not(.dropdown-item) {{
+    color: {primary_color};
+}}
+
+a:not(.btn):not(.nav-link):not(.dropdown-item):hover {{
+    color: {hover_color};
+}}
+
+/* Portal sidebar/nav active states */
+.o_portal_my_home .o_portal_doc_card:hover {{
+    border-color: {primary_color} !important;
+}}
+
+/* Portal stat boxes */
+.o_portal_my_home .o_portal_stat {{
+    color: {primary_color};
+}}
+
+/* Card primary backgrounds */
+.bg-primary,
+.card-header.bg-primary {{
+    background-color: {primary_color} !important;
+}}
+
+/* Text primary */
+.text-primary {{
+    color: {primary_color} !important;
+}}
+
+/* Progress bars */
+.progress-bar {{
+    background-color: {primary_color} !important;
+}}
+
+/* Form focus states */
+.form-control:focus,
+.form-select:focus {{
+    border-color: {primary_color} !important;
+    box-shadow: 0 0 0 0.2rem {light_color} !important;
+}}
+
+/* Checkboxes and radios */
+.form-check-input:checked {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+}}
+
+/* Pagination */
+.page-item.active .page-link {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+}}
+
+.page-link {{
+    color: {primary_color};
+}}
+
+.page-link:hover {{
+    color: {hover_color};
+}}
+
+/* Badges */
+.badge.bg-primary {{
+    background-color: {primary_color} !important;
+}}
+
+/* Website navbar (frontend) */
+header#top .navbar {{
+    --navbar-brand-color: {primary_color};
+}}
+
+/* Footer links */
+footer a:not(.btn) {{
+    color: {primary_color};
+}}
+
+footer a:not(.btn):hover {{
+    color: {hover_color};
 }}
 """
 
@@ -150,6 +275,55 @@ class ColorCustomizerController(http.Controller):
 .o_main_navbar .o_navbar_apps_menu .dropdown-toggle:hover,
 .o_main_navbar .o_navbar_apps_menu .dropdown-toggle:focus {{
     background: {hover_color} !important;
+}}
+
+/* ============================================================================
+   BUG FIX 35: Navbar text and icons - ensure white color for visibility
+   ============================================================================ */
+
+/* All Apps button - use dynamic contrast color for text and icon */
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle,
+.o_main_navbar .o_navbar_apps_menu button {{
+    color: {text_color} !important;
+}}
+
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle .oi,
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle .oi-apps,
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle i,
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle span {{
+    color: {text_color} !important;
+}}
+
+/* All navbar items should use dynamic contrast color */
+.o_main_navbar .o_menu_brand,
+.o_main_navbar .o_nav_entry,
+.o_main_navbar .dropdown-toggle,
+.o_main_navbar button:not(.btn-primary):not(.btn-secondary),
+.o_main_navbar a:not(.dropdown-item) {{
+    color: {text_color} !important;
+}}
+
+/* Navbar icons */
+.o_main_navbar .oi,
+.o_main_navbar .fa,
+.o_main_navbar i:not(.o_button_icon):not(.text-danger):not(.text-success):not(.text-warning) {{
+    color: {text_color} !important;
+}}
+
+/* Systray items (messages, activities, user menu) */
+.o_main_navbar .o_menu_systray .dropdown-toggle,
+.o_main_navbar .o_menu_systray button,
+.o_main_navbar .o_menu_systray a,
+.o_main_navbar .o_menu_systray .oi,
+.o_main_navbar .o_menu_systray .fa,
+.o_main_navbar .o_menu_systray i {{
+    color: {text_color} !important;
+}}
+
+/* Counter badges in systray - inverse colors for contrast */
+.o_main_navbar .o_menu_systray .badge {{
+    background-color: {text_color} !important;
+    color: {primary_color} !important;
 }}
 
 /* ============================================================================

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!--
-        BUG FIX 34: Load minimal CSS for frontend editor launcher
-        This template adds ONLY the CSS needed for the triangle/square fix.
-        Other frontend elements remain unchanged.
+        BUG FIX 34: Load CSS for frontend editor launcher
+        BUG FIX 35: Add PWA theme-color meta tag
+        BUG FIX 36: Add Portal/Website page color support
 
         Cache busting: Include color value in URL so browser fetches fresh CSS
         when color changes (no force refresh needed).
@@ -12,6 +12,29 @@
               inherit_id="website.layout" priority="100">
         <xpath expr="//head/link[last()]" position="after">
             <t t-set="primary_color" t-value="request.env['ir.config_parameter'].sudo().get_param('odoo_color_customizer.primary_color', '#71639e')"/>
+            <!-- PWA theme-color for mobile browsers and PWA title bar -->
+            <meta name="theme-color" t-att-content="primary_color or '#71639e'"/>
+            <!-- Apple PWA status bar color -->
+            <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+            <!-- Load frontend CSS (includes portal styling) -->
+            <link rel="stylesheet" type="text/css"
+                  t-attf-href="/color_customizer/frontend.css?v={{ primary_color[1:] if primary_color else '71639e' }}"/>
+        </xpath>
+    </template>
+
+    <!--
+        BUG FIX 37: Portal/Web frontend_layout styling (non-website pages)
+        Inject CSS into the web frontend layout which is used by portal pages without website module
+    -->
+    <template id="color_customizer_web_frontend" name="Color Customizer Web Frontend"
+              inherit_id="web.frontend_layout" priority="100">
+        <xpath expr="//head/meta[last()]" position="after">
+            <t t-set="primary_color" t-value="request.env['ir.config_parameter'].sudo().get_param('odoo_color_customizer.primary_color', '#71639e')"/>
+            <!-- PWA theme-color for mobile browsers and PWA title bar -->
+            <meta name="theme-color" t-att-content="primary_color or '#71639e'"/>
+            <!-- Apple PWA status bar color -->
+            <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+            <!-- Load frontend CSS -->
             <link rel="stylesheet" type="text/css"
                   t-attf-href="/color_customizer/frontend.css?v={{ primary_color[1:] if primary_color else '71639e' }}"/>
         </xpath>

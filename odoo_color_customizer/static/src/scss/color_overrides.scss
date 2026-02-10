@@ -802,3 +802,79 @@ textarea.o_input:focus {
     }
   }
 }
+
+// =============================================================================
+// BUG FIX 35: "所有應用程式" (All Apps) button - dynamic contrast text color
+// The hamburger menu icon and text color should contrast with the primary background
+// Uses --custom-primary-text which is calculated based on luminance
+// =============================================================================
+
+// Apps menu button - use dynamic contrast color for text and icon
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle,
+.o_main_navbar .o_navbar_apps_menu .o-dropdown.dropdown-toggle,
+.o_main_navbar .o_navbar_apps_menu > .o-dropdown > button,
+.o_main_navbar .o_navbar_apps_menu button.dropdown-toggle {
+  color: var(--custom-primary-text) !important;
+
+  // Hamburger icon (oi-apps class)
+  .oi-apps,
+  .oi,
+  i {
+    color: var(--custom-primary-text) !important;
+  }
+
+  // Text label
+  span {
+    color: var(--custom-primary-text) !important;
+  }
+}
+
+// Apps menu when open (expanded)
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle.show,
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle[aria-expanded="true"] {
+  color: var(--custom-primary-text) !important;
+
+  .oi-apps,
+  .oi,
+  i,
+  span {
+    color: var(--custom-primary-text) !important;
+  }
+}
+
+// Generic navbar button text - use dynamic contrast color
+.o_main_navbar .o_menu_brand,
+.o_main_navbar .o_nav_entry,
+.o_main_navbar .dropdown-toggle,
+.o_main_navbar button,
+.o_main_navbar a {
+  color: var(--custom-primary-text) !important;
+}
+
+// Navbar icons
+.o_main_navbar .oi,
+.o_main_navbar .fa,
+.o_main_navbar i:not(.o_button_icon) {
+  color: var(--custom-primary-text) !important;
+}
+
+// =============================================================================
+// BUG FIX 36: Navbar systray icons (messages, activities, user menu)
+// Ensure all systray items are visible with dynamic contrast color
+// =============================================================================
+.o_main_navbar .o_menu_systray {
+  .dropdown-toggle,
+  button,
+  a,
+  .oi,
+  .fa,
+  i {
+    color: var(--custom-primary-text) !important;
+  }
+
+  // Counter badges should contrast with navbar (inverse colors)
+  .badge {
+    background-color: var(--custom-primary-text) !important;
+    color: var(--custom-primary) !important;
+  }
+}
