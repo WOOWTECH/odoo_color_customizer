@@ -64,12 +64,24 @@ class ColorCustomizerController(http.Controller):
     color: {text_color} !important;
 }}
 
-/* BUG FIX 40: "所有應用程式" button text must be white on dark background */
+/* BUG FIX 40: "所有應用程式" button text and hamburger icon must be white */
 .o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn span,
 .o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn .fa,
 .o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn .oi,
-.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn i {{
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn .oi-apps,
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn i,
+.o_frontend_to_backend_nav .o_frontend_to_backend_apps_btn i::before {{
     color: {text_color} !important;
+}}
+
+/* BUG FIX 41: Hamburger menu icon (oi-apps) must be visible */
+.o_frontend_to_backend_nav .oi-apps,
+.o_frontend_to_backend_nav .oi-apps::before,
+.o_frontend_to_backend_apps_btn .oi-apps,
+.o_frontend_to_backend_apps_btn .oi-apps::before {{
+    color: {text_color} !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }}
 
 /* ============================================================================
