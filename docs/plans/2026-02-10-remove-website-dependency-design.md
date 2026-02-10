@@ -6,10 +6,11 @@
 
 **目標**：
 - 移除 `website` 模組依賴，只保留 `base_setup` 和 `web`
-- Portal 用戶頁面仍然套用自定義主題色
+- ~~Portal 用戶頁面仍然套用自定義主題色~~ **[已更新]** Portal 用戶保持 Odoo 原始預設樣式
+- 只有內部用戶 (`base.group_user`) 在前端頁面才會套用自定義主題色
 - 後台功能完全保留
 
-**技術方案**：保留 Controller 端點 + 使用 `web.frontend_layout` 模板注入 CSS
+**技術方案**：保留 Controller 端點 + 使用 `web.frontend_layout` 模板注入 CSS（加入用戶群組條件檢查）
 
 ## 修改範圍
 
@@ -48,6 +49,8 @@
 
 ### 3. 新增 `views/web_templates.xml`
 
+**[已更新]** 加入 `t-if` 條件，只對內部用戶注入 CSS：
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
@@ -55,7 +58,8 @@
         Color Customizer Frontend CSS Injection
 
         繼承 web.frontend_layout（不需要 website 模組）
-        用於 Portal 頁面和其他前端頁面的主題色自定義
+        只對內部用戶（非 Portal 用戶）注入自定義主題色
+        Portal 用戶保持 Odoo 原始預設樣式
 
         Cache busting: 在 URL 中包含顏色值，確保顏色變更後瀏覽器重新載入 CSS
     -->
@@ -63,40 +67,36 @@
               name="Color Customizer Frontend CSS"
               inherit_id="web.frontend_layout" priority="100">
         <xpath expr="//head" position="inside">
-            <t t-set="primary_color" t-value="request.env['ir.config_parameter'].sudo().get_param('odoo_color_customizer.primary_color', '#71639e')"/>
-            <!-- PWA theme-color for mobile browsers -->
-            <meta name="theme-color" t-att-content="primary_color or '#71639e'"/>
-            <!-- Load frontend CSS -->
-            <link rel="stylesheet" type="text/css"
-                  t-attf-href="/color_customizer/frontend.css?v={{ primary_color[1:] if primary_color else '71639e' }}"/>
+            <!-- 只對內部用戶注入自定義 CSS，Portal 用戶保持原始樣式 -->
+            <t t-if="request.env.user.has_group('base.group_user')">
+                <t t-set="primary_color" t-value="request.env['ir.config_parameter'].sudo().get_param('odoo_color_customizer.primary_color', '#71639e')"/>
+                <!-- PWA theme-color for mobile browsers -->
+                <meta name="theme-color" t-att-content="primary_color or '#71639e'"/>
+                <!-- Load frontend CSS -->
+                <link rel="stylesheet" type="text/css"
+                      t-attf-href="/color_customizer/frontend.css?v={{ primary_color[1:] if primary_color else '71639e' }}"/>
+            </t>
         </xpath>
     </template>
 </odoo>
 ```
 
-### 4. `controllers/main.py` - 加入 Portal 頁面 CSS 規則
+### 4. `controllers/main.py` - frontend.css 端點
 
-`frontend.css` 端點需要包含 Portal 頁面的紫色元素替換：
+**[已更新]** 移除 Portal 頁面通用 CSS 規則，因為 Portal 用戶要保持原始樣式。
 
-| 元素 | CSS 選擇器 | 說明 |
-|------|-----------|------|
-| 主要按鈕 | `.btn-primary` | 背景色、邊框色 |
-| 外框按鈕 | `.btn-outline-primary` | 文字色、邊框色 |
-| 連結 | `a.text-primary` | 文字色 |
-| 文字 | `.text-primary` | 文字色 |
-| 背景 | `.bg-primary` | 背景色 |
-| 表單焦點 | `.form-control:focus` | 邊框色 |
-| 核取方塊 | `.form-check-input:checked` | 背景色 |
-| 分頁 | `.page-item.active .page-link` | 背景色 |
-| 徽章 | `.badge.bg-primary` | 背景色 |
-| 進度條 | `.progress-bar` | 背景色 |
+`frontend.css` 端點只包含以下規則（僅對內部用戶生效）：
+- BUG FIX 34: Frontend Editor Launcher (Triangle + Apps Button)
+- BUG FIX 40-44: Mobile sidebar and hamburger icon fixes
+
+~~Portal 頁面的紫色元素替換~~ **[已移除]**
 
 ## 測試計劃
 
 1. **安裝測試**：在沒有 `website` 模組的 Odoo 實例上安裝此模組
 2. **後台測試**：確認後台顏色自定義功能正常運作
-3. **Portal 測試**：以 Portal 用戶登入，確認頁面套用自定義主題色
-4. **顏色變更測試**：更改主題色後，確認 Portal 頁面立即生效
+3. **Portal 測試**：以 Portal 用戶登入，確認頁面保持 **Odoo 原始預設樣式**（不套用自定義主題色）
+4. **內部用戶前端測試**：以內部用戶登入前端頁面，確認套用自定義主題色
 
 ## 實作步驟
 

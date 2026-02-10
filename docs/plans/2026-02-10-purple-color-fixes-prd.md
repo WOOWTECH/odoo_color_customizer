@@ -22,17 +22,20 @@ The Odoo Color Customizer module is not properly replacing ALL purple color inst
 - **Expected**: Custom primary color
 - **Note**: Footer links (主頁, 關於我們, etc.) appear CYAN ✅ - working correctly
 
-### 3. Portal Page (`/my/home`)
-- **Affected Elements**:
-  - "待審閱報價" (Pending Quotes) card - LIGHT PURPLE background ❌
-  - Card icons (發票, 工具, 借用, 設備, 維修請求) - PURPLE ❌
-  - Card link text - PURPLE ❌
-  - Card descriptions - Should remain GRAY (not purple)
-- **Expected**:
-  - Card background: `--custom-primary-light`
-  - Icons: `--custom-primary`
-  - Link text: `--custom-primary`
-  - Descriptions: GRAY (unchanged)
+### 3. Portal Page (`/my/home`) - **[已取消]**
+~~- **Affected Elements**:~~
+~~  - "待審閱報價" (Pending Quotes) card - LIGHT PURPLE background~~
+~~  - Card icons (發票, 工具, 借用, 設備, 維修請求) - PURPLE~~
+~~  - Card link text - PURPLE~~
+~~  - Card descriptions - Should remain GRAY (not purple)~~
+~~- **Expected**:~~
+~~  - Card background: `--custom-primary-light`~~
+~~  - Icons: `--custom-primary`~~
+~~  - Link text: `--custom-primary`~~
+~~  - Descriptions: GRAY (unchanged)~~
+
+**[2026-02-10 更新]** Portal 用戶頁面保持 Odoo 原始預設樣式，不套用自定義主題色。
+這是為了避免影響網站的 Portal 用戶呈現內容。
 
 ### 4. Backend Navbar (To Be Fixed)
 - **Issue**: Previous fix incorrectly changed ALL navbar text color
@@ -57,32 +60,15 @@ form.oe_login_form a:not(.btn) {
 }
 ```
 
-### CSS Selectors Needed for Portal Page
+### ~~CSS Selectors Needed for Portal Page~~ **[已取消]**
 
-```css
-/* Portal stat card background */
-.o_portal_my_home .o_portal_my_doc_table,
-.o_portal_my_home .o_portal_doc_card,
-.o_portal_docs .card,
-.o_portal_my_home .card.bg-100 {
-    background-color: var(--custom-primary-light) !important;
-}
+**[2026-02-10 更新]** 以下 Portal 頁面 CSS 選擇器已取消，Portal 用戶保持原始樣式：
 
-/* Portal card icons */
-.o_portal_my_home .o_portal_doc_card .fa,
-.o_portal_my_home .o_portal_doc_card .oi,
-.o_portal_my_home .card-body i,
-.o_portal_my_home .o_portal_doc_spinner {
-    color: var(--custom-primary) !important;
-}
-
-/* Portal card links (titles only, not descriptions) */
-.o_portal_my_home .o_portal_doc_card a,
-.o_portal_my_home .card-body a.h5,
-.o_portal_my_home .card-body .card-title a {
-    color: var(--custom-primary) !important;
-}
-```
+~~```css~~
+~~/* Portal stat card background */~~
+~~.o_portal_my_home .o_portal_my_doc_table,~~
+~~...~~
+~~```~~
 
 ### Fix Navbar Text Override
 
@@ -123,9 +109,11 @@ form.oe_login_form a:not(.btn) {
 - File: `controllers/main.py` (frontend.css endpoint)
 - Add: Login form link selectors
 
-### Step 3: Add Portal Page Selectors
-- File: `controllers/main.py` (frontend.css endpoint)
-- Add: Portal card, icon, and link selectors
+### ~~Step 3: Add Portal Page Selectors~~ **[已取消]**
+~~- File: `controllers/main.py` (frontend.css endpoint)~~
+~~- Add: Portal card, icon, and link selectors~~
+
+**[2026-02-10 更新]** Portal 用戶保持原始樣式，此步驟已取消。
 
 ### Step 4: Verify PWA Theme Color
 - File: `views/website_templates.xml`
@@ -155,14 +143,15 @@ form.oe_login_form a:not(.btn) {
 
 ## Testing Checklist
 
-- [ ] PWA theme-color shows custom color
+- [ ] PWA theme-color shows custom color (internal users only)
 - [ ] Login: "選擇使用者" link is custom color
 - [ ] Login: "重設新密碼" link is custom color
 - [ ] Login: "還沒有帳戶？" link is custom color
-- [ ] Portal: Stat card background is light custom color
-- [ ] Portal: Card icons are custom color
-- [ ] Portal: Card link titles are custom color
-- [ ] Portal: Card descriptions remain gray
+- [x] ~~Portal: Stat card background is light custom color~~ **[已取消]** Portal 保持原始樣式
+- [x] ~~Portal: Card icons are custom color~~ **[已取消]** Portal 保持原始樣式
+- [x] ~~Portal: Card link titles are custom color~~ **[已取消]** Portal 保持原始樣式
+- [x] ~~Portal: Card descriptions remain gray~~ **[已取消]** Portal 保持原始樣式
+- [ ] Portal: 保持 Odoo 原始預設樣式（不套用自定義主題色）
 - [ ] Backend: Navbar background is custom color
 - [ ] Backend: Navbar text is readable (proper contrast)
-- [ ] No purple (#714B67, #71639e) visible anywhere
+- [ ] No purple (#714B67, #71639e) visible anywhere (except Portal pages which keep original style)
