@@ -18,11 +18,11 @@ Features:
     """,
     'author': 'Odoo Color Customizer',
     'website': '',
-    'depends': ['base_setup', 'web', 'website'],
+    'depends': ['base_setup', 'web'],
     'data': [
         'security/ir.model.access.csv',
         'views/res_config_settings_views.xml',
-        'views/website_templates.xml',
+        'views/web_templates.xml',
     ],
     'assets': {
         'web.assets_backend': [

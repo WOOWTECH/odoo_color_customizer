@@ -193,6 +193,107 @@ a.o_menu_toggle .fa-bars::before {{
     color: #ffffff !important;
 }}
 
+/* ============================================================================
+   Portal Page Styling
+   Replace purple theme color on portal pages (/my/home, /my/*, etc.)
+   ============================================================================ */
+
+/* Primary buttons */
+.btn-primary {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+.btn-primary:hover,
+.btn-primary:focus {{
+    background-color: {hover_color} !important;
+    border-color: {hover_color} !important;
+}}
+
+.btn-primary:active {{
+    background-color: {active_color} !important;
+    border-color: {active_color} !important;
+}}
+
+/* Outline buttons */
+.btn-outline-primary {{
+    color: {primary_color} !important;
+    border-color: {primary_color} !important;
+}}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {{
+    background-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+/* Text and background utilities */
+.text-primary {{
+    color: {primary_color} !important;
+}}
+
+.bg-primary {{
+    background-color: {primary_color} !important;
+}}
+
+/* Links with primary color */
+a.text-primary {{
+    color: {primary_color} !important;
+}}
+
+a.text-primary:hover {{
+    color: {hover_color} !important;
+}}
+
+/* Form focus states */
+.form-control:focus,
+.form-select:focus {{
+    border-color: {primary_color} !important;
+    box-shadow: 0 0 0 0.2rem {light_color} !important;
+}}
+
+/* Checkboxes and radios */
+.form-check-input:checked {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+}}
+
+/* Pagination */
+.page-item.active .page-link {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+}}
+
+.page-link {{
+    color: {primary_color};
+}}
+
+.page-link:hover {{
+    color: {hover_color};
+}}
+
+/* Badges */
+.badge.bg-primary {{
+    background-color: {primary_color} !important;
+}}
+
+/* Progress bars */
+.progress-bar {{
+    background-color: {primary_color} !important;
+}}
+
+/* Portal specific elements */
+.o_portal_my_home .o_portal_doc_card:hover {{
+    border-color: {primary_color} !important;
+}}
+
+.o_portal_my_home .card-body i,
+.o_portal_my_home .card-body .fa,
+.o_portal_my_home .card-body .oi {{
+    color: {primary_color} !important;
+}}
+
 """
 
         return request.make_response(
