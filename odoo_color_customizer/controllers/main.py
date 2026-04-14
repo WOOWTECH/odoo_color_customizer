@@ -452,6 +452,33 @@ form[action="/web/reset_password"] .btn-primary:hover {{
     color: {hover_color} !important;
 }}
 
+/* Login page btn-link buttons (Choose user / Use another user) */
+.oe_login_form .btn-link,
+.oe_login_form .o_user_switch_btn,
+.o_user_switch .btn-link {{
+    color: {primary_color} !important;
+}}
+
+.oe_login_form .btn-link:hover,
+.oe_login_form .o_user_switch_btn:hover,
+.o_user_switch .btn-link:hover {{
+    color: {hover_color} !important;
+}}
+
+/* User switch list items */
+.o_user_switch .list-group-item:hover,
+.o_user_switch .list-group-item:focus {{
+    background-color: {light_color} !important;
+    border-color: {primary_color} !important;
+}}
+
+.o_user_switch .list-group-item:active,
+.o_user_switch .list-group-item.active {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
 /* ---- Footer ---- */
 #wrapwrap footer a:hover,
 footer a:hover {{
