@@ -193,6 +193,347 @@ a.o_menu_toggle .fa-bars::before {{
     color: #ffffff !important;
 }}
 
+/* ============================================================================
+   PORTAL & PUBLIC USER — Unified Brand Color
+   All portal pages, login/signup, and public-facing pages
+   ============================================================================ */
+
+/* ---- Portal / Frontend Navbar ---- */
+header#top .navbar,
+header .navbar,
+.o_frontend_header,
+nav.navbar.navbar-expand-lg {{
+    background-color: {primary_color} !important;
+    border-bottom-color: {hover_color} !important;
+}}
+
+header#top .navbar .nav-link,
+header#top .navbar .navbar-nav .nav-link,
+header .navbar .nav-link,
+.o_frontend_header .nav-link,
+header#top .navbar .navbar-brand,
+header .navbar .navbar-brand {{
+    color: {text_color} !important;
+}}
+
+header#top .navbar .nav-link:hover,
+header#top .navbar .nav-link:focus,
+header .navbar .nav-link:hover,
+header .navbar .nav-link:focus,
+.o_frontend_header .nav-link:hover {{
+    color: {text_color} !important;
+    opacity: 0.85;
+}}
+
+/* Navbar dropdown items (user menu, etc.) */
+header .navbar .dropdown-menu .dropdown-item:active,
+header .navbar .dropdown-menu .dropdown-item.active {{
+    background-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+header .navbar .dropdown-menu .dropdown-item:hover,
+header .navbar .dropdown-menu .dropdown-item:focus {{
+    background-color: {light_color} !important;
+    color: {primary_color} !important;
+}}
+
+/* Navbar toggler (hamburger) for portal mobile */
+header .navbar .navbar-toggler {{
+    border-color: rgba(255,255,255,0.5) !important;
+}}
+
+header .navbar .navbar-toggler .navbar-toggler-icon {{
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}}
+
+/* eCommerce cart icon in navbar */
+header .navbar .badge,
+header .navbar .my_cart_quantity {{
+    background-color: {hover_color} !important;
+    color: {text_color} !important;
+}}
+
+/* ---- Portal "My Account" Home Page Icons & Cards ---- */
+.o_portal_my_home .o_portal_category .o_portal_category_icon,
+.o_portal_my_home .o_portal_index .o_portal_category_icon {{
+    color: {primary_color} !important;
+}}
+
+.o_portal_my_home .o_portal_category:hover .o_portal_category_icon,
+.o_portal_my_home .o_portal_index:hover .o_portal_category_icon {{
+    color: {hover_color} !important;
+}}
+
+/* Portal doc count badges */
+.o_portal_my_home .badge.bg-primary,
+.o_portal_my_home .badge.rounded-pill.bg-primary {{
+    background-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+/* ---- Portal Sidebar ---- */
+.o_portal_sidebar .nav-link.active,
+.o_portal_sidebar .nav-link:hover {{
+    color: {primary_color} !important;
+}}
+
+.o_portal_sidebar .nav-link.active {{
+    border-color: {primary_color} !important;
+}}
+
+/* ---- Portal Breadcrumb ---- */
+.o_portal .breadcrumb-item a {{
+    color: {primary_color} !important;
+}}
+
+.o_portal .breadcrumb-item a:hover {{
+    color: {hover_color} !important;
+}}
+
+/* ---- General Links (Frontend) ---- */
+#wrapwrap a:not(.btn):not(.nav-link):not(.dropdown-item),
+.o_portal a:not(.btn):not(.nav-link):not(.dropdown-item),
+main a:not(.btn):not(.nav-link):not(.dropdown-item) {{
+    color: {primary_color} !important;
+}}
+
+#wrapwrap a:not(.btn):not(.nav-link):not(.dropdown-item):hover,
+.o_portal a:not(.btn):not(.nav-link):not(.dropdown-item):hover,
+main a:not(.btn):not(.nav-link):not(.dropdown-item):hover {{
+    color: {hover_color} !important;
+}}
+
+/* ---- Buttons (Frontend) ---- */
+#wrapwrap .btn-primary,
+.o_portal .btn-primary,
+main .btn-primary {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+#wrapwrap .btn-primary:hover,
+.o_portal .btn-primary:hover,
+main .btn-primary:hover {{
+    background-color: {hover_color} !important;
+    border-color: {hover_color} !important;
+    color: {text_color} !important;
+}}
+
+#wrapwrap .btn-primary:active,
+#wrapwrap .btn-primary:focus,
+.o_portal .btn-primary:active,
+.o_portal .btn-primary:focus,
+main .btn-primary:active,
+main .btn-primary:focus {{
+    background-color: {active_color} !important;
+    border-color: {active_color} !important;
+    color: {text_color} !important;
+}}
+
+#wrapwrap .btn-outline-primary,
+.o_portal .btn-outline-primary,
+main .btn-outline-primary {{
+    color: {primary_color} !important;
+    border-color: {primary_color} !important;
+}}
+
+#wrapwrap .btn-outline-primary:hover,
+.o_portal .btn-outline-primary:hover,
+main .btn-outline-primary:hover {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+/* ---- Form Inputs Focus (Frontend) ---- */
+#wrapwrap .form-control:focus,
+#wrapwrap .form-select:focus,
+.o_portal .form-control:focus,
+.o_portal .form-select:focus,
+main .form-control:focus,
+main .form-select:focus {{
+    border-color: {primary_color} !important;
+    box-shadow: 0 0 0 0.25rem {primary_color}40 !important;
+}}
+
+/* ---- Pagination (Frontend) ---- */
+#wrapwrap .page-item.active .page-link,
+.o_portal .page-item.active .page-link {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+#wrapwrap .page-link,
+.o_portal .page-link {{
+    color: {primary_color} !important;
+}}
+
+#wrapwrap .page-link:hover,
+.o_portal .page-link:hover {{
+    color: {hover_color} !important;
+}}
+
+/* ---- Badges (Frontend) ---- */
+.o_portal .badge.text-bg-primary,
+.o_portal .badge.bg-primary,
+#wrapwrap .badge.text-bg-primary,
+#wrapwrap .badge.bg-primary {{
+    background-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+/* Portal status badges (Draft, Sent, Confirmed, etc.) */
+.o_portal .badge.bg-info {{
+    background-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+/* ---- Progress Bars (Frontend) ---- */
+#wrapwrap .progress-bar,
+.o_portal .progress-bar {{
+    background-color: {primary_color} !important;
+}}
+
+/* ---- Tables (Portal) ---- */
+.o_portal .table a,
+.o_portal table a {{
+    color: {primary_color} !important;
+}}
+
+.o_portal .table a:hover,
+.o_portal table a:hover {{
+    color: {hover_color} !important;
+}}
+
+/* ---- Login / Signup / Password Reset Pages ---- */
+.oe_login_form .btn-primary,
+.oe_signup_form .btn-primary,
+.oe_reset_password_form .btn-primary,
+form[action="/web/login"] .btn-primary,
+form[action="/web/signup"] .btn-primary,
+form[action="/web/reset_password"] .btn-primary {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+.oe_login_form .btn-primary:hover,
+.oe_signup_form .btn-primary:hover,
+.oe_reset_password_form .btn-primary:hover,
+form[action="/web/login"] .btn-primary:hover,
+form[action="/web/signup"] .btn-primary:hover,
+form[action="/web/reset_password"] .btn-primary:hover {{
+    background-color: {hover_color} !important;
+    border-color: {hover_color} !important;
+    color: {text_color} !important;
+}}
+
+/* Login form input focus */
+.oe_login_form .form-control:focus,
+.oe_signup_form .form-control:focus,
+.oe_reset_password_form .form-control:focus {{
+    border-color: {primary_color} !important;
+    box-shadow: 0 0 0 0.25rem {primary_color}40 !important;
+}}
+
+/* Login page links */
+.oe_login_form a,
+.oe_signup_form a,
+.oe_reset_password_form a {{
+    color: {primary_color} !important;
+}}
+
+.oe_login_form a:hover,
+.oe_signup_form a:hover,
+.oe_reset_password_form a:hover {{
+    color: {hover_color} !important;
+}}
+
+/* ---- Footer ---- */
+#wrapwrap footer a:hover,
+footer a:hover {{
+    color: {primary_color} !important;
+}}
+
+/* ---- Checkboxes & Radio Buttons (Frontend) ---- */
+#wrapwrap .form-check-input:checked,
+.o_portal .form-check-input:checked {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+}}
+
+#wrapwrap .form-check-input:focus,
+.o_portal .form-check-input:focus {{
+    border-color: {primary_color} !important;
+    box-shadow: 0 0 0 0.25rem {primary_color}40 !important;
+}}
+
+/* ---- Portal Signature ---- */
+.o_portal_signature .btn-primary {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+/* ---- Portal Chatter ---- */
+.o_portal_chatter .btn-primary {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+.o_portal_chatter a {{
+    color: {primary_color} !important;
+}}
+
+.o_portal_chatter a:hover {{
+    color: {hover_color} !important;
+}}
+
+/* ---- eCommerce (if Website module installed) ---- */
+.oe_website_sale .btn-primary {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+.oe_website_sale .btn-primary:hover {{
+    background-color: {hover_color} !important;
+    border-color: {hover_color} !important;
+}}
+
+/* ---- Mobile Responsive: Portal pages ---- */
+@media (max-width: 991.98px) {{
+    header .navbar-collapse {{
+        background-color: {primary_color} !important;
+    }}
+
+    header .navbar-collapse .nav-link {{
+        color: {text_color} !important;
+        border-bottom: 1px solid {hover_color};
+    }}
+
+    header .navbar-collapse .nav-link:hover {{
+        background-color: {hover_color} !important;
+    }}
+
+    /* Mobile dropdown in portal navbar */
+    header .navbar-collapse .dropdown-menu {{
+        background-color: {hover_color} !important;
+    }}
+
+    header .navbar-collapse .dropdown-menu .dropdown-item {{
+        color: {text_color} !important;
+    }}
+
+    header .navbar-collapse .dropdown-menu .dropdown-item:hover {{
+        background-color: {active_color} !important;
+    }}
+}}
+
 """
 
         return request.make_response(

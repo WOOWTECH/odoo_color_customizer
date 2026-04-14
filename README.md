@@ -25,7 +25,7 @@
   <img src="https://img.shields.io/badge/Odoo-18.0-purple?logo=odoo" alt="Odoo 18"/>
   <img src="https://img.shields.io/badge/Python-3.10+-blue?logo=python" alt="Python 3.10+"/>
   <img src="https://img.shields.io/badge/License-LGPL--3-green" alt="License"/>
-  <img src="https://img.shields.io/badge/Version-18.0.1.4.0-orange" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-18.0.1.5.0-orange" alt="Version"/>
   <img src="https://img.shields.io/badge/Coverage-30%2B%20UI%20Elements-blue" alt="UI Coverage"/>
 </p>
 
@@ -48,7 +48,7 @@
 | Color changes break on Odoo upgrades | Dynamic CSS generation — upgrade-safe |
 | Need different branding per environment | Change colors without touching source code |
 | Frontend and backend need consistent branding | Covers both backend and frontend layouts |
-| Portal users shouldn't see custom colors | Portal users automatically retain Odoo's default styling |
+| Portal pages don't match your brand | Portal, login, and public pages all use your brand color |
 
 ---
 
@@ -84,10 +84,12 @@
 - **Product configurator** — Selection indicators
 - **And more...** — 34+ bug fixes for comprehensive coverage
 
-### Smart User Handling
+### Unified Brand Experience for All Users
 
-- **Internal Users** — See the custom brand color throughout the interface
-- **Portal Users** — Automatically retain Odoo's original default styling (no custom CSS injected)
+- **Internal Users** — See the custom brand color throughout the backend interface
+- **Portal Users** — Portal pages (account home, quotations, invoices, projects, tasks) use the same brand color
+- **Public Users** — Login, signup, and password reset pages also apply the brand color
+- **Mobile Users** — Responsive portal pages and hamburger menus follow the brand color
 
 ---
 
@@ -125,7 +127,8 @@
 │  │  └── Return dynamic CSS with 30+ UI element overrides      │   │
 │  │                                                            │   │
 │  │  GET /color_customizer/frontend.css                        │   │
-│  │  ├── Frontend-specific CSS (website pages)                 │   │
+│  │  ├── Frontend CSS for all users (portal, public, internal) │   │
+│  │  ├── Portal pages, login/signup, navbar, buttons, links    │   │
 │  │  └── Mobile hamburger menu & editor launcher fixes         │   │
 │  └────────────────────────────────────────────────────────────┘   │
 │                              │                                    │
@@ -147,7 +150,7 @@
 ```
 odoo_color_customizer/
 ├── __init__.py
-├── __manifest__.py                     # Module metadata (v18.0.1.4.0)
+├── __manifest__.py                     # Module metadata (v18.0.1.5.0)
 ├── controllers/
 │   ├── __init__.py
 │   └── main.py                         # Dynamic CSS endpoints (866 lines)
@@ -377,6 +380,8 @@ This ensures readable text on any background color.
 | **Progress** | Bar fill color |
 | **Discuss** | Sidebar category highlights |
 | **Frontend** | Editor launcher, mobile hamburger menu |
+| **Portal** | Navbar, home icons, sidebar, breadcrumb, tables, signature |
+| **Login/Signup** | Buttons, form focus, links |
 
 ---
 
@@ -460,16 +465,23 @@ The browser may cache the CSS. Try:
 ### Frontend Pages Not Updating
 
 1. Frontend CSS uses a separate endpoint (`/color_customizer/frontend.css`)
-2. The template only injects CSS for **internal users** (group_user)
-3. Portal users intentionally see the default Odoo styling
+2. The template injects CSS for **all users** — internal, portal, and public
+3. Try clearing browser cache or hard-refreshing (`Ctrl+Shift+R`)
 
 ---
 
 ## Changelog
 
+### v18.0.1.5.0 (2026-04)
+
+- **Feature:** Portal users now see the same brand color as internal users — unified brand experience
+- **Feature:** Login, signup, and password reset pages apply the brand color
+- **Feature:** Portal pages covered: account home, quotations, invoices, projects, tasks, signatures
+- **Feature:** Mobile portal pages apply the brand color (hamburger menu, responsive elements)
+- **Improvement:** 250+ lines of new portal/public CSS rules
+
 ### v18.0.1.4.0 (2026-04)
 
-- **Fix:** Portal users now maintain Odoo's original default styling — custom CSS is not injected for portal/external users
 - **Fix:** Frontend editor launcher triangle color fix
 - **Fix:** Mobile hamburger menu icon styling
 - **Fix:** "All Applications" button text visibility
