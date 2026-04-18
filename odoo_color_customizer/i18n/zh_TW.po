@@ -1,0 +1,59 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* odoo_color_customizer
+#
+# Translators:
+# WOOW Tech, 2026
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-18 00:00+0000\n"
+"PO-Revision-Date: 2026-04-18 00:00+0000\n"
+"Last-Translator: WOOW Tech\n"
+"Language-Team: Chinese (Traditional Han script)\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: odoo_color_customizer
+#: model:ir.model.fields,field_description:odoo_color_customizer.field_res_config_settings__primary_color
+msgid "Primary Color"
+msgstr "主要色彩"
+
+#. module: odoo_color_customizer
+#: model:ir.model.fields,help:odoo_color_customizer.field_res_config_settings__primary_color
+msgid ""
+"Choose a custom primary color for the Odoo interface. This color will "
+"replace the default Odoo purple across the entire UI."
+msgstr "選擇 Odoo 介面的自訂主要色彩。此色彩將取代整個使用者介面中預設的 Odoo 紫色。"
+
+#. module: odoo_color_customizer
+#: model_terms:ir.ui.view,arch_db:odoo_color_customizer.res_config_settings_view_form_color
+msgid "Color Customization"
+msgstr "色彩自訂"
+
+#. module: odoo_color_customizer
+#: model_terms:ir.ui.view,arch_db:odoo_color_customizer.res_config_settings_view_form_color
+msgid "<span class=\"text-muted me-1\">Current value:</span>"
+msgstr "<span class=\"text-muted me-1\">目前值：</span>"
+
+#. module: odoo_color_customizer
+#: model_terms:ir.ui.view,arch_db:odoo_color_customizer.res_config_settings_view_form_color
+msgid ""
+"Customize the primary brand color used throughout the Odoo interface. "
+"Changes apply immediately."
+msgstr "自訂 Odoo 介面中使用的主要品牌色彩。變更將立即套用。"
+
+#. module: odoo_color_customizer
+#: model_terms:ir.ui.view,arch_db:odoo_color_customizer.res_config_settings_view_form_color
+msgid "Reset primary color to Odoo default (#71639e)?"
+msgstr "要將主要色彩重設為 Odoo 預設值 (#71639e) 嗎？"
+
+#. module: odoo_color_customizer
+#: model_terms:ir.ui.view,arch_db:odoo_color_customizer.res_config_settings_view_form_color
+msgid "Reset to Default"
+msgstr "重設為預設值"
