@@ -203,8 +203,8 @@ header#top .navbar,
 header .navbar,
 .o_frontend_header,
 nav.navbar.navbar-expand-lg {{
-    background-color: {primary_color} !important;
-    border-bottom-color: {hover_color} !important;
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #dee2e6 !important;
 }}
 
 header#top .navbar .nav-link,
@@ -213,7 +213,7 @@ header .navbar .nav-link,
 .o_frontend_header .nav-link,
 header#top .navbar .navbar-brand,
 header .navbar .navbar-brand {{
-    color: {text_color} !important;
+    color: #212529 !important;
 }}
 
 header#top .navbar .nav-link:hover,
@@ -221,8 +221,8 @@ header#top .navbar .nav-link:focus,
 header .navbar .nav-link:hover,
 header .navbar .nav-link:focus,
 .o_frontend_header .nav-link:hover {{
-    color: {text_color} !important;
-    opacity: 0.85;
+    color: {primary_color} !important;
+    opacity: 1;
 }}
 
 /* Navbar dropdown items (user menu, etc.) */
@@ -240,18 +240,18 @@ header .navbar .dropdown-menu .dropdown-item:focus {{
 
 /* Navbar toggler (hamburger) for portal mobile */
 header .navbar .navbar-toggler {{
-    border-color: rgba(255,255,255,0.5) !important;
+    border-color: rgba(0,0,0,0.2) !important;
 }}
 
 header .navbar .navbar-toggler .navbar-toggler-icon {{
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
 }}
 
 /* eCommerce cart icon in navbar */
 header .navbar .badge,
 header .navbar .my_cart_quantity {{
-    background-color: {hover_color} !important;
-    color: {text_color} !important;
+    background-color: {primary_color} !important;
+    color: #ffffff !important;
 }}
 
 /* ---- Portal "My Account" Home Page Icons & Cards ---- */
@@ -282,7 +282,24 @@ header .navbar .my_cart_quantity {{
     border-color: {primary_color} !important;
 }}
 
-/* ---- Portal Breadcrumb ---- */
+/* ---- Portal Submenu / Breadcrumb / Navbar Bar ---- */
+.o_portal_submenu,
+.o_portal_submenu .breadcrumb,
+.o_portal .o_portal_submenu,
+.o_portal_navbar,
+.o_portal .o_portal_navbar {{
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #dee2e6 !important;
+}}
+
+.o_portal_submenu .breadcrumb-item,
+.o_portal_submenu .breadcrumb-item a,
+.o_portal_submenu .breadcrumb-item.active,
+.o_portal_navbar .navbar-brand,
+.o_portal_navbar .nav-link {{
+    color: #212529 !important;
+}}
+
 .o_portal .breadcrumb-item a {{
     color: {primary_color} !important;
 }}
@@ -535,29 +552,31 @@ footer a:hover {{
 /* ---- Mobile Responsive: Portal pages ---- */
 @media (max-width: 991.98px) {{
     header .navbar-collapse {{
-        background-color: {primary_color} !important;
+        background-color: #ffffff !important;
     }}
 
     header .navbar-collapse .nav-link {{
-        color: {text_color} !important;
-        border-bottom: 1px solid {hover_color};
+        color: #212529 !important;
+        border-bottom: 1px solid #dee2e6;
     }}
 
     header .navbar-collapse .nav-link:hover {{
-        background-color: {hover_color} !important;
+        background-color: {light_color} !important;
+        color: {primary_color} !important;
     }}
 
     /* Mobile dropdown in portal navbar */
     header .navbar-collapse .dropdown-menu {{
-        background-color: {hover_color} !important;
+        background-color: #f8f9fa !important;
     }}
 
     header .navbar-collapse .dropdown-menu .dropdown-item {{
-        color: {text_color} !important;
+        color: #212529 !important;
     }}
 
     header .navbar-collapse .dropdown-menu .dropdown-item:hover {{
-        background-color: {active_color} !important;
+        background-color: {light_color} !important;
+        color: {primary_color} !important;
     }}
 }}
 
