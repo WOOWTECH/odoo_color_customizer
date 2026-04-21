@@ -592,6 +592,234 @@ footer a:hover {{
             ]
         )
 
+    @http.route('/color_customizer/discuss.css', type='http', auth='public', cors='*')
+    def get_discuss_css(self):
+        """
+        Return CSS for the Discuss public page (mail.discuss_public_channel_template).
+        This page uses a standalone HTML template that does NOT inherit
+        web.frontend_layout, so it needs its own CSS injection.
+        Covers: sidebar, thread header, composer, messages, buttons.
+        """
+        primary_color = request.env['ir.config_parameter'].sudo().get_param(
+            'odoo_color_customizer.primary_color',
+            DEFAULT_PRIMARY_COLOR
+        )
+
+        if not primary_color or not self._is_valid_hex_color(primary_color):
+            primary_color = DEFAULT_PRIMARY_COLOR
+
+        hover_color = self._darken_color(primary_color, 0.1)
+        active_color = self._darken_color(primary_color, 0.2)
+        light_color = self._lighten_color(primary_color, 0.85)
+        text_color = self._get_contrast_color(primary_color)
+
+        css = f""":root {{
+    --custom-primary: {primary_color};
+    --custom-primary-hover: {hover_color};
+    --custom-primary-active: {active_color};
+    --custom-primary-light: {light_color};
+    --custom-primary-text: {text_color};
+}}
+
+/* ============================================================================
+   Discuss Public Page - Sidebar
+   ============================================================================ */
+
+/* Sidebar CSS variables override */
+.o-mail-DiscussSidebar {{
+    --mail-DiscussSidebar-itemActiveBgColor: {light_color};
+    --mail-DiscussSidebar-itemActiveOutlineColor: {primary_color};
+}}
+
+/* Active sidebar channel */
+.o-mail-DiscussSidebar-item.o-active,
+.o-mail-DiscussSidebarChannel.o-active {{
+    background-color: {light_color} !important;
+    outline-color: {primary_color} !important;
+}}
+
+/* Hover state for sidebar items */
+.o-mail-DiscussSidebar-item:hover,
+.o-mail-DiscussSidebarChannel:hover {{
+    background-color: {light_color} !important;
+}}
+
+/* Sidebar category toggler hover */
+.o-mail-DiscussSidebarCategory-toggler:hover {{
+    color: {primary_color} !important;
+}}
+
+/* Sidebar category icon (channel/DM section icons) */
+.o-mail-DiscussSidebarCategory-icon {{
+    color: {primary_color} !important;
+}}
+
+/* Sidebar options button on hover */
+.o-mail-DiscussSidebar-optionsBtn:hover {{
+    color: {primary_color} !important;
+}}
+
+/* Quick search button active */
+.o-mail-DiscussSidebarCategories-quickSearchBtn.o-active {{
+    background-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+/* Quick search input focus */
+.o-mail-DiscussSidebarQuickSearchInput.o-active {{
+    outline-color: {primary_color} !important;
+}}
+
+/* ============================================================================
+   Discuss Public Page - Thread Header
+   ============================================================================ */
+
+/* Thread icon (hash # for channels) */
+.o-mail-ThreadIcon {{
+    color: {primary_color} !important;
+}}
+
+/* Header action buttons (video, phone, search, settings, etc.) */
+.o-mail-Discuss-headerActions .btn:hover,
+.o-mail-Discuss-headerActionsGroup .btn:hover {{
+    color: {primary_color} !important;
+}}
+
+/* ============================================================================
+   Discuss Public Page - Composer (Message Input)
+   ============================================================================ */
+
+/* Send button */
+.o-mail-Composer-send:hover {{
+    color: {primary_color} !important;
+}}
+
+/* Composer action buttons (emoji, attachment) */
+.o-mail-Composer-actions .btn:hover {{
+    color: {primary_color} !important;
+}}
+
+/* Composer input focus */
+.o-mail-Composer-input:focus-within {{
+    border-color: {primary_color} !important;
+    box-shadow: 0 0 0 0.15rem {primary_color}30 !important;
+}}
+
+/* ============================================================================
+   Discuss Public Page - Messages
+   ============================================================================ */
+
+/* Message action buttons on hover */
+.o-mail-Message-actions .btn:hover {{
+    color: {primary_color} !important;
+}}
+
+/* Message links */
+.o-mail-Message a:not(.btn) {{
+    color: {primary_color} !important;
+}}
+
+.o-mail-Message a:not(.btn):hover {{
+    color: {hover_color} !important;
+}}
+
+/* ============================================================================
+   Discuss Public Page - Member List Panel
+   ============================================================================ */
+
+/* Panel header text */
+.o-mail-ActionPanel-header {{
+    color: {primary_color} !important;
+}}
+
+/* ============================================================================
+   Discuss Public Page - General Buttons & Links
+   ============================================================================ */
+
+/* Primary buttons */
+.btn-primary {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+.btn-primary:hover {{
+    background-color: {hover_color} !important;
+    border-color: {hover_color} !important;
+    color: {text_color} !important;
+}}
+
+.btn-primary:active,
+.btn-primary:focus {{
+    background-color: {active_color} !important;
+    border-color: {active_color} !important;
+    color: {text_color} !important;
+}}
+
+/* Outline primary buttons */
+.btn-outline-primary {{
+    color: {primary_color} !important;
+    border-color: {primary_color} !important;
+}}
+
+.btn-outline-primary:hover {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+    color: {text_color} !important;
+}}
+
+/* General links */
+a:not(.btn):not(.nav-link):not(.dropdown-item) {{
+    color: {primary_color} !important;
+}}
+
+a:not(.btn):not(.nav-link):not(.dropdown-item):hover {{
+    color: {hover_color} !important;
+}}
+
+/* Focus states for form inputs */
+.form-control:focus,
+.form-select:focus {{
+    border-color: {primary_color} !important;
+    box-shadow: 0 0 0 0.25rem {primary_color}40 !important;
+}}
+
+/* Checkboxes */
+.form-check-input:checked {{
+    background-color: {primary_color} !important;
+    border-color: {primary_color} !important;
+}}
+
+.form-check-input:focus {{
+    border-color: {primary_color} !important;
+    box-shadow: 0 0 0 0.25rem {primary_color}40 !important;
+}}
+
+/* ============================================================================
+   Discuss Public Page - Notification Messages
+   ============================================================================ */
+
+.o-mail-NotificationMessage {{
+    color: {primary_color} !important;
+}}
+
+/* Date section separator */
+.o-mail-DateSection {{
+    color: {primary_color} !important;
+}}
+
+"""
+
+        return request.make_response(
+            css,
+            headers=[
+                ('Content-Type', 'text/css; charset=utf-8'),
+                ('Cache-Control', 'no-cache, no-store, must-revalidate'),
+                ('Pragma', 'no-cache'),
+                ('Expires', '0'),
+            ]
+        )
+
     @http.route('/color_customizer/theme.css', type='http', auth='public', cors='*')
     def get_theme_css(self):
         """

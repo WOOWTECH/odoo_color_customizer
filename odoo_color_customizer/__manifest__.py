@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Color Customizer',
-    'version': '18.0.1.7.0',
+    'version': '18.0.1.8.0',
     'category': 'Customizations',
     'summary': 'Customize Odoo primary brand color',
     'description': """
@@ -18,7 +18,7 @@ Features:
     """,
     'author': 'Odoo Color Customizer',
     'website': '',
-    'depends': ['base_setup', 'web'],
+    'depends': ['base_setup', 'web', 'mail'],
     'data': [
         'security/ir.model.access.csv',
         'views/res_config_settings_views.xml',
