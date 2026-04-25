@@ -875,3 +875,30 @@ a.o_menu_toggle .fa-bars::before {
 // We only override the BACKGROUND colors, not text colors.
 // Black text should remain black - only purple elements are changed.
 // =============================================================================
+
+// =============================================================================
+// BUG FIX 45: Mobile Burger Menu Sidebar App Links — Keep Odoo Native Dark Text
+// The general link color rule (a:not(.btn)...) makes all burger menu app names
+// blue when accessed via the website URL. Force them back to native dark text.
+// =============================================================================
+
+.o_burger_menu a:not(.btn),
+.o_burger_menu_content a:not(.btn),
+.o_burger_menu_app a:not(.btn) {
+  color: #212529 !important;
+}
+
+.o_burger_menu a:not(.btn):hover,
+.o_burger_menu_content a:not(.btn):hover,
+.o_burger_menu_app a:not(.btn):hover {
+  color: #000000 !important;
+}
+
+// Sub-menu items (e.g. 配置 > 通知, 語音及視訊)
+.o_burger_menu_content .o_burger_menu_section a {
+  color: #212529 !important;
+
+  &:hover {
+    color: #000000 !important;
+  }
+}

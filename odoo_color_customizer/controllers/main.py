@@ -580,6 +580,33 @@ footer a:hover {{
     }}
 }}
 
+/* ============================================================================
+   BUG FIX 45: Backend Burger Menu Sidebar — Keep Odoo Native Dark Text
+   When internal users access backend via the website URL, the frontend CSS
+   overrides --custom-primary which bleeds into the burger menu sidebar.
+   Force burger menu links back to dark text.
+   ============================================================================ */
+
+.o_burger_menu a:not(.btn),
+.o_burger_menu_content a:not(.btn),
+.o_burger_menu_app a:not(.btn) {{
+    color: #212529 !important;
+}}
+
+.o_burger_menu a:not(.btn):hover,
+.o_burger_menu_content a:not(.btn):hover,
+.o_burger_menu_app a:not(.btn):hover {{
+    color: #000000 !important;
+}}
+
+.o_burger_menu_content .o_burger_menu_section a {{
+    color: #212529 !important;
+}}
+
+.o_burger_menu_content .o_burger_menu_section a:hover {{
+    color: #000000 !important;
+}}
+
 """
 
         return request.make_response(
